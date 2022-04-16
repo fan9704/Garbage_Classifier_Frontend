@@ -1,10 +1,18 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import vuetify from './plugins/vuetify'
-import { loadFonts } from './plugins/webfontloader'
-
-loadFonts()
-
-createApp(App)
-  .use(vuetify)
-  .mount('#app')
+import { createApp } from "vue";
+import App from "./App.vue";
+import router from "./router";
+import axios from "axios";
+import VueAxios from "vue-axios";
+import vuetify from "./plugins/vuetify";
+import { loadFonts } from "./plugins/webfontloader";
+import AOS from 'aos'
+import 'aos/dist/aos.css'
+loadFonts();
+createApp(App);
+app.use(store)
+app.use(router);
+app.use(vuetify);
+app.use(VueAxios, axios);
+app.use(loadFonts);
+app.use(AOS.init());
+app.mount("#app");
