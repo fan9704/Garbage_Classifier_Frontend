@@ -6,30 +6,42 @@ const path = require('path')
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    vue(),
-    // https://github.com/vuetifyjs/vuetify-loader/tree/next/packages/vite-plugin
-    vuetify({
-      autoImport: true,
-    }),
-  ],
-  define: { 'process.env': {} },
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, 'src'),
+    plugins: [
+        vue(),
+        // https://github.com/vuetifyjs/vuetify-loader/tree/next/packages/vite-plugin
+        vuetify({
+            autoImport: true,
+        }),
+    ],
+    define: { 'process.env': {} },
+    resolve: {
+        alias: {
+            '@': path.resolve(__dirname, 'src'),
+        },
     },
-  },
-  /* remove the need to specify .vue files https://vitejs.dev/config/#resolve-extensions
-  resolve: {
-    extensions: [
-      '.js',
-      '.json',
-      '.jsx',
-      '.mjs',
-      '.ts',
-      '.tsx',
-      '.vue',
-    ]
-  },
-  */
+    server: {
+        proxy: {
+            // 字串寫法
+            '/foo': 'http://localhost:8080',
+            // 選項寫法
+            '/api': {
+                target: 'http://localhost:8080',
+                changeOrigin: true,
+                rewrite: (path) => path.replace('', '')
+            },
+        }
+    }
+    /* remove the need to specify .vue files https://vitejs.dev/config/#resolve-extensions
+    resolve: {
+      extensions: [
+        '.js',
+        '.json',
+        '.jsx',
+        '.mjs',
+        '.ts',
+        '.tsx',
+        '.vue',
+      ]
+    },
+    */
 })

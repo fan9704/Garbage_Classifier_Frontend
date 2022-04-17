@@ -8,8 +8,7 @@ import { loadFonts } from "./plugins/webfontloader";
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 loadFonts();
-createApp(App);
-app.use(store)
+const app = createApp(App);
 app.use(router);
 app.use(vuetify);
 app.use(VueAxios, axios);
