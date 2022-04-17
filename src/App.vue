@@ -152,12 +152,12 @@ export default {
         .catch((err) => console.log(err));
     },
   },
-  // computed: {
-  //   logincheck() {
-  //     console.log(this.$store.state.login);
-  //     return this.$store.state.login;
-  //   },
-  // },
+  computed: {
+    logincheck() {
+      console.log(this.$store.state.login);
+      return this.$store.state.login;
+    },
+  },
   // mounted() {
   //   let sessionid = this.getCookie("sessionid");
   //   console.log(sessionid);

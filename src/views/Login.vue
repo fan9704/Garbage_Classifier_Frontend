@@ -1,11 +1,11 @@
 <template>
-  <v-form v-model="valid" ref="form" lazy-validation >
+  <v-form v-model="valid" ref="form" lazy-validation>
     <transition name="slide">
       <v-container v-show="isShow">
         <h2 class="h2">Login Account</h2>
-     
-          <v-dialog scrollable v-model="show_form">
-               <transition name="slide">
+
+        <v-dialog scrollable v-model="show_form">
+          <transition name="slide">
             <v-card class="forget_card forget_card1" v-show="card_change">
               <v-card-title>
                 <span class="text-h4">Forget Password</span>
@@ -38,14 +38,15 @@
                 @click="card_change = !card_change"
                 icon="mdi-arrow-down-box"
               ></v-btn>
-            </v-card> </transition>
-               <transition name="slide">
+            </v-card>
+          </transition>
+          <transition name="slide">
             <v-card class="forget_card forget_card2" v-show="!card_change">
               <v-card-title>
                 <span class="text-h4">Enter Authorize Code</span>
               </v-card-title>
               <v-alert shaped prominent type="error" v-show="error_code">
-            Authorize Code Error
+                Authorize Code Error
               </v-alert>
               <v-card-text>
                 <v-text-field
@@ -72,9 +73,10 @@
                 icon="mdi-arrow-up-box"
               >
               </v-btn>
-            </v-card> </transition>
-          </v-dialog>
-       
+            </v-card>
+          </transition>
+        </v-dialog>
+
         <transition name="fade">
           <v-alert shaped prominent type="error" class="error" v-show="error">
             {{ error_msg }}
@@ -147,8 +149,6 @@
               required
             ></v-text-field>
           </v-col>
-        <!-- </v-row>
-        <v-row> -->
           <v-col cols="12" xs="12" sm="12" md="6">
             <v-text-field
               v-model="password"
@@ -169,8 +169,6 @@
               required
             ></v-text-field>
           </v-col>
-        <!-- </v-row>
-        <v-row> -->
           <v-col cols="12" xs="12" sm="12" md="6">
             <v-text-field
               v-model="last_name"
@@ -190,15 +188,17 @@
               required
             ></v-text-field>
           </v-col>
-             <v-checkbox
-             cols="12" xs="12" sm="12" md="6"
-          v-model="checkbox"
-          :rules="[(v) => !!v || 'You must agree to continue!']"
-          label="Do you agree our policy?"
-          required
-        ></v-checkbox>
+          <v-checkbox
+            cols="12"
+            xs="12"
+            sm="12"
+            md="6"
+            v-model="checkbox"
+            :rules="[(v) => !!v || 'You must agree to continue!']"
+            label="Do you agree our policy?"
+            required
+          ></v-checkbox>
         </v-row>
-     
 
         <v-btn color="warning" class="mr-4" v-on:click="slidetoggle"
           >Go to Login</v-btn
@@ -228,6 +228,8 @@ export default {
     valid: true,
     username: "",
     password: "",
+    first_name:'',
+    last_name:'',
     nameRules: [
       (v) => !!v || "Userame is required",
       (v) => v.length <= 30 || "Userame must be less than 30 characters",
@@ -246,8 +248,8 @@ export default {
     error_email: false,
     error_email_msg: "",
     card_change: true,
-    captcha:'',
-    error_code:false,
+    captcha: "",
+    error_code: false,
   }),
   methods: {
     reset() {
@@ -270,8 +272,11 @@ export default {
         this.axios
           .post(url, config)
           .then((response) => {
-            console.log(response)
-            if (response.status==200) {
+            console.log(response);
+            if (response.status == 200) {
+              this.$store.commit("login");
+              this.$store.state.user = this.username;
+              alert("Login Success");
               this.$router.push({ name: "index" });
             } else {
               this.error = true;
@@ -284,17 +289,20 @@ export default {
     },
     register() {
       let config = {
-        username: this.username,
-        password: this.password,
-        first_name: this.fisrt_name,
-        last_name: this.last_name,
+        active: true,
         email: this.email,
+        lastName: this.first_name,
+        name: this.last_name,
+        password: this.password,
+        userName: this.username
       };
       let url = "/api/register/";
       this.axios
         .post(url, config)
         .then((response) => {
           console.log(response.data);
+          alert("register success");
+          this.isShow= !this.isShow
         })
         .catch((error) => console.log(error));
     },
@@ -317,12 +325,12 @@ export default {
         })
         .catch((error) => console.log(error));
     },
-    Authorize(){
-       let config = {
+    Authorize() {
+      let config = {
         email: this.email,
-        captcha:this.captcha,
+        captcha: this.captcha,
       };
-      let url = "/api/accounts/forget/";//TODO: update password
+      let url = "/api/accounts/forget/"; //TODO: update password
       this.axios
         .post(url, config)
         .then((response) => {
@@ -334,13 +342,13 @@ export default {
           }
         })
         .catch((error) => console.log(error));
-    }
+    },
   },
 };
 </script>
 <style scoped>
-.v-container{
-    margin-top: 5px;
+.v-container {
+  margin-top: 5px;
 }
 .v-alert .error {
   width: 70%;
@@ -352,11 +360,11 @@ h2.h2 {
   /* position: absolute; */
   padding: 20px;
 }
-.forget_card1{
-z-index: 1;
+.forget_card1 {
+  z-index: 1;
 }
-.forget_card2{
-z-index: 2;
+.forget_card2 {
+  z-index: 2;
 }
 @media screen and (min-width: 960px) {
   .v-container {
@@ -366,7 +374,7 @@ z-index: 2;
   }
 }
 @media screen and (max-width: 960px) {
-  .v-form{
+  .v-form {
     margin-bottom: 200px;
   }
 }
