@@ -1,5 +1,5 @@
 <template>
-  <v-form v-model="valid" ref="form" lazy-validation>
+  <v-form v-model="valid" ref="form" lazy-validation >
     <transition name="slide">
       <v-container v-show="isShow">
         <h2 class="h2">Login Account</h2>
@@ -265,16 +265,13 @@ export default {
         let config = {
           username: this.username,
           password: this.password,
-          save: this.save,
         };
-        let url = "/api/accounts/login/";
+        let url = "/api/login";
         this.axios
           .post(url, config)
           .then((response) => {
-            console.log(response.data);
-            if (response.data.login == true) {
-              this.$store.commit("login");
-              this.$store.state.user = this.username;
+            console.log(response)
+            if (response.status==200) {
               this.$router.push({ name: "index" });
             } else {
               this.error = true;
@@ -293,7 +290,7 @@ export default {
         last_name: this.last_name,
         email: this.email,
       };
-      let url = "/api/accounts/register/";
+      let url = "/api/register/";
       this.axios
         .post(url, config)
         .then((response) => {

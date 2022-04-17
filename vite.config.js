@@ -21,8 +21,6 @@ export default defineConfig({
     },
     server: {
         proxy: {
-            // 字串寫法
-            '/foo': 'http://localhost:8080',
             // 選項寫法
             '/api': {
                 target: 'http://localhost:8080',
