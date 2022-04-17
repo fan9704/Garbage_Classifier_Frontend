@@ -231,8 +231,8 @@ export default {
     first_name:'',
     last_name:'',
     nameRules: [
-      (v) => !!v || "Userame is required",
-      (v) => v.length <= 30 || "Userame must be less than 30 characters",
+      (v) => !!v || "Username is required",
+      (v) => v.length <= 30 || "Username must be less than 30 characters",
     ],
     email: "",
     emailRules: [
@@ -261,7 +261,7 @@ export default {
     login() {
       if (this.username == "" || this.password == "") {
         this.error = true;
-        this.error_msg = "Username or Password mustn,t be empty";
+        this.error_msg = "Username or Password mustn't be empty";
         setInterval(() => (this.error = false), 2000); //same as CSS
       } else {
         let config = {
@@ -276,11 +276,12 @@ export default {
             if (response.status == 200) {
               this.$store.commit("login");
               this.$store.state.user = this.username;
-              alert("Login Success");
+              this.$swal.fire(  'Login Success!!',`Welcome ${this.username} ~ `,'success');
               this.$router.push({ name: "index" });
             } else {
               this.error = true;
               this.error_msg = "Login Failed Username Or Password Error";
+              this.$swal.fire(  'Login Failed!!',`Please Login Again `,'error');
               setInterval(() => (this.error = false), 2000); //same as CSS
             }
           })

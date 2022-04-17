@@ -8,6 +8,8 @@ import { loadFonts } from "./plugins/webfontloader";
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import { createStore } from 'vuex';
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 loadFonts();
 const store = createStore({
     state() {
@@ -38,4 +40,5 @@ app.use(vuetify);
 app.use(VueAxios, axios);
 app.use(loadFonts);
 app.use(AOS.init());
+app.use(VueSweetalert2);
 app.mount("#app");
