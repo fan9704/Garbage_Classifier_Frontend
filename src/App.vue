@@ -67,7 +67,7 @@
         </v-list>
       </v-navigation-drawer>
       <v-main>
-        <v-container fluid> <router-view></router-view></v-container>
+        <v-container fluid class="main-container"> <router-view></router-view></v-container>
       </v-main>
     </v-layout>
     <v-footer app>
@@ -192,7 +192,7 @@ v-toolbar-title {
 .form-btn {
   margin: 20px;
 }
-.v-container{
+.main-container{
   margin: 0;
   padding: 0;
 

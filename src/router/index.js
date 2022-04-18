@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import Index from "../views/Index.vue"
 import Login from "../views/Login.vue"
+import GraphView from "../views/Graph.vue"
 const routes = [{
         path: "/",
         name: "index",
@@ -30,11 +31,11 @@ const routes = [{
     //         name: "FileConverterView",
     //         component: FileConverterView,
     //     },
-    //     {
-    //         path: "/graph",
-    //         name: "GraphView",
-    //         component: GraphView,
-    //     },
+    {
+        path: "/graph",
+        name: "GraphView",
+        component: GraphView,
+    },
 ];
 
 const router = createRouter({
