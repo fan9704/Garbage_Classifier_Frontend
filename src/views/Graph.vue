@@ -1,7 +1,12 @@
 <template>
   <v-container>
     <!-- RWD -->
-    <h2 class="h2">Vue-Chart-3 Testing</h2>
+    <h2 class="h2">Garbage Record Data Analysis</h2>
+    <v-row class="mb6" no-gutters>
+         <v-col cols="12" sm="12" md="12">
+        <DoughnutChart v-bind="MainProps"
+      /></v-col>
+    </v-row>
     <v-row class="mb-6" no-gutters>
       <v-col cols="6" sm="12" md="6">
         <DoughnutChart v-bind="doughnutChartProps"
@@ -49,11 +54,21 @@ import {
   useRadarChart,
 } from "vue-chart-3";
 import { Chart, registerables } from "chart.js"; //, ChartData, ChartOptions
+let totalAmountArray=ref([])
+let totalName= ref(["Plastic","IronCan","Paper","ALCan"]);
 Chart.register(...registerables);
 export default {
   data() {
     return {
       values: [],
+      mainPlastic:[],
+      mainIroncan:[],
+      mainPaper:[],
+      mainALcan:[],
+      totalPlastic:0,
+      totalIroncan:0,
+      totalPaper:0,
+      totalALcan:0
     };
   },
   name: "GraphView",
@@ -62,6 +77,20 @@ export default {
     const dataValues = ref([30, 40, 60, 70, 5]);
     const datalabel = ref(["Paris", "Nîmes", "Toulon", "Perpignan", "Autre"]);
     const toggleLegend = ref(true);
+    const MainData = computed(() => ({
+      labels: totalName.value,
+      datasets: [
+        {
+          data:totalAmountArray.value,
+          backgroundColor: [
+            "#E63F00",
+            "#FFAA33",
+            "#BBFF66",
+            "#009FCC",
+          ],
+        },
+      ],
+    }));
     const testData = computed(() => ({
       //<ChartData<"doughnut">>
       labels: datalabel.value,
@@ -109,7 +138,7 @@ export default {
         },
         title: {
           display: true,
-          text: "Chart.js Doughnut Chart",
+          text: "Total Recycling Record Doughnut Chart",
         },
       },
     }));
@@ -129,9 +158,17 @@ export default {
       chartData: testData,
       options,
     });
+    let MainProps = useDoughnutChart({
+      chartData: MainData,
+      options,
+    }).doughnutChartProps;
+    let MainRef = useDoughnutChart({
+      chartData: MainData,
+      options,
+    }).doughnutChartRef;
     function shuffleData() {
       dataValues.value = shuffle(dataValues.value);
-      console.log(doughnutChartRef.value.chartInstance);
+      totalAmountArray.value = shuffle(totalAmountArray.value);
     }
     function switchLegend() {
       toggleLegend.value = !toggleLegend.value;
@@ -161,8 +198,41 @@ export default {
       lineChartRef,
       radarChartProps,
       radarChartRef,
+      MainProps,
+      MainRef
     };
   },
+  beforeMount(){
+      this.axios.get("/api/garbage_records/")
+      .then((res)=>{
+        let tempPlastic=[];
+        let tempIroncan=[];
+        let tempPaper=[];
+        let tempALcan=[];
+        for(let i in res.data){
+          if(res.data[i].garbage_type["id"]==0){
+            tempPlastic.push(res.data[i])
+            this.totalPlastic+=res.data[i].weight;
+          }else if(res.data[i].garbage_type["id"]==1){
+            tempIroncan.push(res.data[i])
+            this.totalIroncan+=res.data[i].weight;
+          }else if(res.data[i].garbage_type["id"]==2){
+            tempPaper.push(res.data[i])
+            this.totalPaper+=res.data[i].weight;
+          }else if(res.data[i].garbage_type["id"]==3){
+            tempALcan.push(res.data[i])
+            this.totalALcan+=res.data[i].weight;
+          }
+        }
+        this.mainPlastic=tempPlastic;
+        this.mainIroncan=tempIroncan;
+        this.mainPaper=tempPaper;
+        this.mainALcan=tempALcan;
+        totalAmountArray.value=[this.totalPlastic,this.totalIroncan,this.totalPaper,this.totalALcan];
+        console.log(totalAmountArray.value)
+        })
+      .catch((err)=>(console.log(err)))
+  }
 };
 </script>
 
