@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import Index from "../views/Index.vue"
 import Login from "../views/Login.vue"
 import GraphView from "../views/Graph.vue"
+import MachineList from "../views/MachineList.vue"
 const routes = [{
         path: "/",
         name: "index",
@@ -11,11 +12,11 @@ const routes = [{
         name: "Login",
         component: Login,
     },
-    //     {
-    //         path: "/certification/list",
-    //         name: "Certilist",
-    //         component: Certilist,
-    //     },
+    {
+        path: "/machine/list",
+        name: "MachineList",
+        component: MachineList,
+    },
     //     {
     //         path: "/account/setting",
     //         name: "Settings",

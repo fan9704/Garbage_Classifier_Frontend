@@ -31,9 +31,9 @@
               to="/chat"
             ></v-list-item>
             <v-list-item
-              prepend-icon="mdi-badge-account-horizontal-outline"
-              title="Certification List"
-              to="/certification/list"
+              prepend-icon="mdi-washing-machine"
+              title="Machine List"
+              to="/machine/list"
             >
             </v-list-item>
             <v-list-item
