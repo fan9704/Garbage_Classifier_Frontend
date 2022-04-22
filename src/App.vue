@@ -25,22 +25,11 @@
               to="/account/setting"
             ></v-list-item>
             <v-list-item
-              v-if="logincheck"
-              prepend-icon="mdi-chat"
-              title="Chatroom!"
-              to="/chat"
-            ></v-list-item>
-            <v-list-item
               prepend-icon="mdi-washing-machine"
               title="Machine List"
               to="/machine/list"
             >
             </v-list-item>
-            <v-list-item
-              prepend-icon="mdi-file-replace"
-              title="File Converter"
-              to="/file"
-            ></v-list-item>
             <v-list-item
               prepend-icon="mdi-graph"
               title="Graph"
@@ -56,7 +45,7 @@
               v-if="logincheck"
               prepend-icon="mdi-logout"
               title="Logout"
-              v-on:click="logoutform = !logoutform"
+              v-on:click="logout"
             ></v-list-item>
             <v-list-item
               prepend-icon="mdi-refresh"
@@ -124,18 +113,8 @@ export default {
       return "";
     },
     logout() {
-      this.axios
-        .get("/api/accounts/login/")
-        .then((response) => {
-          console.log(response);
-          this.$store.commit("logout");
-          alert("Logout Success");
-          this.logoutform=false;
-          this.$router.push({ name: "index" });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      this.$store.commit("logout");
+      this.$swal.fire(  'Logout Success!!',`GoodBye ${this.$store.state.user} ~ `,'success');
     },
     refresh() {
       let sessionid = this.getCookie("sessionid");
@@ -154,25 +133,9 @@ export default {
   },
   computed: {
     logincheck() {
-      console.log(this.$store.state.login);
       return this.$store.state.login;
     },
   },
-  // mounted() {
-  //   let sessionid = this.getCookie("sessionid");
-  //   console.log(sessionid);
-  //   this.axios
-  //     .post("/api/accounts/login/")
-  //     .then((res) => {
-  //       console.log(res.data);
-  //       if (res.data.User != null && res.data.User != undefined) {
-  //         this.username = res.data.User;
-  //         this.$store.state.user = res.data.User;
-  //         this.$store.commit("login");
-  //       }
-  //     })
-  //     .catch((err) => console.log(err));
-  // },
 };
 </script>
 <style scoped>

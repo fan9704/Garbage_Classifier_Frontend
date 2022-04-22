@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-dialog v-model="progress" activator="parent">
+    <v-dialog v-model="progress" >
       <v-card class="d-flex justify-center mb-6 progress">
         <v-card-text> Waiting for data </v-card-text>
         <v-progress-circular
@@ -27,28 +27,48 @@
             {{ opt }}
           </option>
         </select> -->
-        </v-col
-      >
+      </v-col>
     </v-row>
     <v-row>
-      <v-col cols="2">ID</v-col>
-      <v-col cols="4" > Machine Location </v-col>
-      <v-col cols="2" > User Lock </v-col>
-      <v-col cols="2" > Machine Lock </v-col>
+      <v-col cols="2" sm="4" md="2">ID</v-col>
+      <v-col cols="2" sm="4" md="2"> Machine Location </v-col>
+      <v-col cols="2" sm="4" md="2"> User Lock </v-col>
+      <v-col cols="2" sm="4" md="2"> Machine Lock </v-col>
+      <v-col cols="2" sm="4" md="2"> Current User </v-col>
+      <v-col cols="2" sm="4" md="2"> Operation </v-col>
     </v-row>
-    <v-row :key="index" v-for="(cert, index) in certs">
-      <v-col cols="2" data-aos="flip-right">
-          <!-- {{index + 1 + (page - 1) * select_option}} -->
-          {{cert.id}}
-        </v-col>
-      <v-col cols="4" data-aos="flip-right">
+    <v-row :key="index" v-for="(cert, index) in certs" class="certs-row">
+      <v-col cols="2" sm="4" md="2" lg="2" data-aos="flip-right">
+        <!-- {{index + 1 + (page - 1) * select_option}} -->
+        {{ cert.id }}
+      </v-col>
+      <v-col cols="2" sm="4" md="2" lg="2" data-aos="flip-right">
         {{ cert.location }}
       </v-col>
-            <v-col cols="2"  data-aos="flip-right">
+      <v-col cols="2" sm="4" md="2" lg="2" data-aos="flip-right">
         {{ cert.user_lock }}
       </v-col>
-            <v-col cols="2"  data-aos="flip-right">
+      <v-col cols="2" sm="4" md="2" lg="2" data-aos="flip-right">
         {{ cert.machine_lock }}
+      </v-col>
+      <v-col
+        cols="2"
+        sm="4"
+        md="2"
+        lg="2"
+        data-aos="flip-right"
+        justify="space-around"
+      >
+        <span v-if="cert.current_user != null">{{
+          cert.current_user.userName
+        }}</span>
+        <span v-else>
+          <v-icon color="red darken-2" large> mdi-null </v-icon>
+          No User
+        </span>
+      </v-col>
+      <v-col cols="2" sm="4" md="2" data-aos="flip-right">
+        <v-btn flat color="warning">Edit Info</v-btn>
       </v-col>
     </v-row>
   </v-container>
@@ -97,8 +117,9 @@ export default {
       .then((res) => {
         this.datanumber = res.data.length;
         this.certs = res.data.splice(0, 0 + this.select_option);
-        setTimeout(()=>{ this.progress = false; }, 1000);
-        
+        setTimeout(() => {
+          this.progress = false;
+        }, 1000);
       })
       .catch((error) => console.log(error));
   },
@@ -115,5 +136,11 @@ option {
 }
 .progress {
   padding: 20px;
+}
+
+.certs-row {
+  background: linear-gradient(rgb(255, 210, 151), rgb(248, 236, 169));
+  border-radius: 5px;
+  margin: 15px 0px;
 }
 </style>

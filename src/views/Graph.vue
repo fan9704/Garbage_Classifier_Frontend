@@ -174,14 +174,12 @@ export default {
       toggleLegend.value = !toggleLegend.value;
     }
     function AddDataSet() {
-      console.log(dataValues.value);
-      dataValues.value = dataValues.value.push(Math.random() * 100);
-      console.log(dataValues.value);
+      dataValues.value.push(Math.random() * 100);
+      datalabel.value.push("Test"+Math.floor(Math.random() * 100))
     }
     function RemoveDataSet() {
-      console.log(dataValues.value);
-      dataValues.value = dataValues.value.pop();
-      console.log(dataValues.value);
+      dataValues.value.pop();
+      datalabel.value.pop();
     }
     return {
       shuffleData,
