@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-dialog v-model="progress" >
+    <v-dialog v-model="progress">
       <v-card class="d-flex justify-center mb-6 progress">
         <v-card-text> Waiting for data </v-card-text>
         <v-progress-circular
@@ -11,10 +11,16 @@
         ></v-progress-circular>
       </v-card>
     </v-dialog>
-
+    <!--MachineInfoForm  -->
+    <v-container v-show="MachineInfoForm" class="MachineInfoForm">
+      <v-row>
+        <v-col cols="1"></v-col>
+      </v-row>
+    </v-container>
+    <!--MachineInfoForm  -->
     <h2>Machine List</h2>
     <v-row>
-      <v-col cols="12" class="d-flex">
+      <v-col cols="6" xs="12" sm="12" md="12" lg="6" class="d-flex">
         <v-select :items="option" label="Option" outlined />
         <!-- <select
           name="type"
@@ -28,6 +34,12 @@
           </option>
         </select> -->
       </v-col>
+      <v-col cols="5" xs="12" sm="12" md="12" lg="5" class="d-flex">
+        <v-text-field label="Machine Location" placeholder="Placeholder" v-model="CreateMachineLocation"></v-text-field
+      ></v-col>
+      <v-col cols="1"  xs="12" sm="12" md="12" lg="1" class="d-flex">
+         <v-btn flat color="success" @click="createMachine">Create Machine</v-btn>
+      </v-col>
     </v-row>
     <v-row>
       <v-col cols="2" sm="4" md="2">ID</v-col>
@@ -37,7 +49,7 @@
       <v-col cols="2" sm="4" md="2"> Current User </v-col>
       <v-col cols="2" sm="4" md="2"> Operation </v-col>
     </v-row>
-    <v-row :key="index" v-for="(cert, index) in certs" class="certs-row">
+    <v-row :key="index" v-for="(cert, index) in certs" class="certs-row" data-aos="flip-right">
       <v-col cols="2" sm="4" md="2" lg="2" data-aos="flip-right">
         <!-- {{index + 1 + (page - 1) * select_option}} -->
         {{ cert.id }}
@@ -48,7 +60,7 @@
       <v-col cols="2" sm="4" md="2" lg="2" data-aos="flip-right">
         {{ cert.user_lock }}
       </v-col>
-      <v-col cols="2" sm="4" md="2" lg="2" data-aos="flip-right">
+      <v-col cols="2" sm="4" md="2" lg="2" >
         {{ cert.machine_lock }}
       </v-col>
       <v-col
@@ -68,7 +80,7 @@
         </span>
       </v-col>
       <v-col cols="2" sm="4" md="2" data-aos="flip-right">
-        <v-btn flat color="warning">Edit Info</v-btn>
+        <v-btn flat color="warning" @click="showMachineForm(cert.id)">Edit Info</v-btn>
       </v-col>
     </v-row>
   </v-container>
@@ -94,6 +106,8 @@ export default {
       datanumber: 100,
       page: 1,
       progress: true,
+      CreateMachineLocation:"",
+      MachineInfoForm:false,
     };
   },
   methods: {
@@ -109,6 +123,32 @@ export default {
         })
         .catch((error) => console.log(error));
     },
+    createMachine(){
+      let url="/api/machine";
+      let config={
+        location: this.CreateMachineLocation,
+        machine_lock: false,
+        user_lock: false
+      }
+      if(this.CreateMachineLocation!=""){
+        this.axios.post(url,config)
+        .then((res)=>{
+          this.$swal.fire(  'Create Machine Success!!',`${this.CreateMachineLocation} ~ `,'success');
+        })
+      }else{
+        this.$swal.fire(  'Create Failed!!',`Please Enter Location Again `,'error');
+      }
+    },
+    showMachineForm(id){
+      let url = `/api/machine/${id}`;
+      this.axios
+        .get(url)
+        .then((res) => {
+          this.MachineInfoForm= !this.MachineInfoForm;
+          console.log(res.data);
+        })
+        .catch((error) => console.log(error));
+    }
   },
   beforeMount() {
     let url = "/api/machines/";
