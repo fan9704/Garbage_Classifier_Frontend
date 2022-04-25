@@ -3,9 +3,11 @@
     <!-- RWD -->
     <h2 class="h2">Garbage Record Data Analysis</h2>
     <v-row class="mb6" no-gutters>
-         <v-col cols="12" sm="12" md="12">
-        <DoughnutChart v-bind="MainProps"
-      /></v-col>
+      <v-col cols="0" xs="0" sm="0" md="3" lg="3"> </v-col>
+      <v-col cols="12" xs="12" sm="12" md="6" lg="6">
+        <DoughnutChart v-bind="MainProps" />
+      </v-col>
+      <v-col cols="0" xs="0" sm="0" md="3" lg="3"> </v-col>
     </v-row>
     <v-row class="mb-6" no-gutters>
       <v-col cols="6" sm="12" md="6">
@@ -54,21 +56,21 @@ import {
   useRadarChart,
 } from "vue-chart-3";
 import { Chart, registerables } from "chart.js"; //, ChartData, ChartOptions
-let totalAmountArray=ref([])
-let totalName= ref(["Plastic","IronCan","Paper","ALCan"]);
+let totalAmountArray = ref([]);
+let totalName = ref(["Plastic", "IronCan", "Paper", "ALCan"]);
 Chart.register(...registerables);
 export default {
   data() {
     return {
       values: [],
-      mainPlastic:[],
-      mainIroncan:[],
-      mainPaper:[],
-      mainALcan:[],
-      totalPlastic:0,
-      totalIroncan:0,
-      totalPaper:0,
-      totalALcan:0
+      mainPlastic: [],
+      mainIroncan: [],
+      mainPaper: [],
+      mainALcan: [],
+      totalPlastic: 0,
+      totalIroncan: 0,
+      totalPaper: 0,
+      totalALcan: 0,
     };
   },
   name: "GraphView",
@@ -81,13 +83,8 @@ export default {
       labels: totalName.value,
       datasets: [
         {
-          data:totalAmountArray.value,
-          backgroundColor: [
-            "#E63F00",
-            "#FFAA33",
-            "#BBFF66",
-            "#009FCC",
-          ],
+          data: totalAmountArray.value,
+          backgroundColor: ["#E63F00", "#FFAA33", "#BBFF66", "#009FCC"],
         },
       ],
     }));
@@ -175,7 +172,7 @@ export default {
     }
     function AddDataSet() {
       dataValues.value.push(Math.random() * 100);
-      datalabel.value.push("Test"+Math.floor(Math.random() * 100))
+      datalabel.value.push("Test" + Math.floor(Math.random() * 100));
     }
     function RemoveDataSet() {
       dataValues.value.pop();
@@ -197,40 +194,45 @@ export default {
       radarChartProps,
       radarChartRef,
       MainProps,
-      MainRef
+      MainRef,
     };
   },
-  beforeMount(){
-      this.axios.get("/api/garbage_records/")
-      .then((res)=>{
-        let tempPlastic=[];
-        let tempIroncan=[];
-        let tempPaper=[];
-        let tempALcan=[];
-        for(let i in res.data){
-          if(res.data[i].garbage_type["id"]==0){
-            tempPlastic.push(res.data[i])
-            this.totalPlastic+=res.data[i].weight;
-          }else if(res.data[i].garbage_type["id"]==1){
-            tempIroncan.push(res.data[i])
-            this.totalIroncan+=res.data[i].weight;
-          }else if(res.data[i].garbage_type["id"]==2){
-            tempPaper.push(res.data[i])
-            this.totalPaper+=res.data[i].weight;
-          }else if(res.data[i].garbage_type["id"]==3){
-            tempALcan.push(res.data[i])
-            this.totalALcan+=res.data[i].weight;
+  beforeMount() {
+    this.axios
+      .get("/api/garbage_records/")
+      .then((res) => {
+        let tempPlastic = [];
+        let tempIroncan = [];
+        let tempPaper = [];
+        let tempALcan = [];
+        for (let i in res.data) {
+          if (res.data[i].garbage_type["id"] == 0) {
+            tempPlastic.push(res.data[i]);
+            this.totalPlastic += res.data[i].weight;
+          } else if (res.data[i].garbage_type["id"] == 1) {
+            tempIroncan.push(res.data[i]);
+            this.totalIroncan += res.data[i].weight;
+          } else if (res.data[i].garbage_type["id"] == 2) {
+            tempPaper.push(res.data[i]);
+            this.totalPaper += res.data[i].weight;
+          } else if (res.data[i].garbage_type["id"] == 3) {
+            tempALcan.push(res.data[i]);
+            this.totalALcan += res.data[i].weight;
           }
         }
-        this.mainPlastic=tempPlastic;
-        this.mainIroncan=tempIroncan;
-        this.mainPaper=tempPaper;
-        this.mainALcan=tempALcan;
-        totalAmountArray.value=[this.totalPlastic,this.totalIroncan,this.totalPaper,this.totalALcan];
-        console.log(totalAmountArray.value)
-        })
-      .catch((err)=>(console.log(err)))
-  }
+        this.mainPlastic = tempPlastic;
+        this.mainIroncan = tempIroncan;
+        this.mainPaper = tempPaper;
+        this.mainALcan = tempALcan;
+        totalAmountArray.value = [
+          this.totalPlastic,
+          this.totalIroncan,
+          this.totalPaper,
+          this.totalALcan,
+        ];
+      })
+      .catch((err) => console.log(err));
+  },
 };
 </script>
 

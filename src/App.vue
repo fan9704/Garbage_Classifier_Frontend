@@ -1,5 +1,5 @@
 <template>
-  <v-app >
+  <v-app>
     <v-layout style="overflow: hidden">
       <v-app-bar absolute color="warning">
         <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
@@ -31,6 +31,12 @@
             >
             </v-list-item>
             <v-list-item
+              prepend-icon="mdi-clipboard-list-outline"
+              title="Machine Storage List"
+              to="/storage/list"
+            >
+            </v-list-item>
+            <v-list-item
               prepend-icon="mdi-graph"
               title="Graph"
               to="/graph"
@@ -56,7 +62,9 @@
         </v-list>
       </v-navigation-drawer>
       <v-main>
-        <v-container fluid class="main-container"> <router-view></router-view></v-container>
+        <v-container fluid class="main-container">
+          <router-view></router-view
+        ></v-container>
       </v-main>
     </v-layout>
     <v-footer app>
@@ -114,7 +122,11 @@ export default {
     },
     logout() {
       this.$store.commit("logout");
-      this.$swal.fire(  'Logout Success!!',`GoodBye ${this.$store.state.user} ~ `,'success');
+      this.$swal.fire(
+        "Logout Success!!",
+        `GoodBye ${this.$store.state.user} ~ `,
+        "success"
+      );
     },
     refresh() {
       let sessionid = this.getCookie("sessionid");
@@ -155,9 +167,8 @@ v-toolbar-title {
 .form-btn {
   margin: 20px;
 }
-.main-container{
+.main-container {
   margin: 0;
   padding: 0;
-
 }
 </style>
