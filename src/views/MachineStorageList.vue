@@ -15,7 +15,7 @@
     <v-container v-show="MachineStorageInfoForm" class="MachineInfoForm">
       <v-row
         ><h2>Edit Machine Information</h2>
-        <v-btn class="closeButton" color="error" size="small" @click="MachineInfoForm = !MachineInfoForm" >X </v-btn></v-row
+        <v-btn class="closeButton" color="error" size="small" @click="MachineStorageInfoForm= !MachineStorageInfoForm" >X </v-btn></v-row
       >
       <v-row>
         <v-col cols="3" xs="3" sm="3" md="1" lg="1">Machine Location</v-col>
@@ -24,42 +24,43 @@
             label="Machine Location"
             variant="outlined"
             v-model="MachineLocation"
+            disabled
           ></v-text-field>
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols="3" xs="3" sm="3" md="1" lg="1">User Lock</v-col>
+        <v-col cols="3" xs="3" sm="3" md="1" lg="1">Garbage Type</v-col>
         <v-col cols="9" xs="9" sm="9" md="11" lg="11">
           <v-text-field
-            label="User Lock"
+            label="Garbage Type"
             variant="outlined"
             v-model="UserLock"
+            disabled
           ></v-text-field>
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols="3" xs="3" sm="3" md="1" lg="1">Machine Lock</v-col>
+        <v-col cols="3" xs="3" sm="3" md="1" lg="1">TimeStamp</v-col>
         <v-col cols="9" xs="9" sm="9" md="11" lg="11">
           <v-text-field
-            label="Machine Lock"
+            label="TimeStamp"
             variant="outlined"
             v-model="MachineLock"
           ></v-text-field>
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols="3" xs="3" sm="3" md="1" lg="1">Current User</v-col>
+        <v-col cols="3" xs="3" sm="3" md="1" lg="1">Storage</v-col>
         <v-col cols="9" xs="9" sm="9" md="11" lg="11">
           <v-text-field
-            label="Current User"
+            label="Storage"
             variant="outlined"
             v-model="CurrentUser"
           ></v-text-field>
         </v-col>
       </v-row>
       <v-row >
-        <v-col cols="6" class="d-flex mb-6 justify-space-around"><v-btn color="secondary">Check User Valid</v-btn></v-col>
-         <v-col cols="6" class="d-flex mb-6 justify-space-around"><v-btn color="success" :disabled="MachineInfoBtn">Edit Machine Information</v-btn></v-col>
+         <v-col cols="12" class="d-flex mb-6 justify-space-around"><v-btn color="success" @click="updateMachineStorage(id)">Edit Machine Storage</v-btn></v-col>
       </v-row>
     </v-container>
     <!--MachineInfoForm  -->
@@ -167,6 +168,8 @@ export default {
       MachineInfoBtn:true,
       MachineList:["All"],
       SelectMachine:null,
+      SelectMachineId:null,
+      SelectGarbageTypeId:null
     };
   },
   methods: {
@@ -206,14 +209,50 @@ export default {
         .get(url)
         .then((res) => {
           this.MachineStorageInfoForm = !this.MachineStorageInfoForm;
-          console.log(res.data);
           this.MachineLocation = res.data.machine.location;
-          this.UserLock = res.data.user_lock;
-          this.MachineLock = res.data.machine_lock;
-          this.CurrentUser = res.data.current_user.userName;
+          this.UserLock = res.data.garbageType.type_name;
+          this.MachineLock = res.data.time_stamp;
+          this.CurrentUser = res.data.storage;
+          this.SelectGarbageTypeId=res.data.garbageType.id;
+          this.SelectMachineId=res.data.machine.id;
+          this.SelectStorage=res.data.id
         })
         .catch((error) => console.log(error));
     },
+    updateMachineStorage(){
+      let url=`/api/machine_storage`;
+      let config={
+        garbage_type: this.SelectGarbageTypeId,
+        machine_id: this.SelectMachineId,
+        storage: this.CurrentUser
+      };
+      console.log(config)
+      this.axios.patch(url,config)
+      .then((res)=>{
+        this.MachineStorageInfoForm= false;
+        this.$swal.fire( 'Update Storage Success!!',`Storage Reach To ${this.CurrentUser} ~ `,'success');
+        this.listAllRecord();
+      })
+      .catch((err)=>console.log(err))
+    },
+    listAllRecord(){
+          let url = "/api/machines_storage";
+    this.axios
+      .get(url)
+      .then((res) => {
+        this.datanumber = res.data.length;
+        this.certs = res.data.splice(0, 0 + this.select_option);
+        setTimeout(() => {
+          this.progress = false;
+        }, 1000);
+        for(let i in this.certs){
+          if(! this.MachineList.includes(this.certs[i].machine.location)){
+            this.MachineList.push(this.certs[i].machine.location)
+          }
+        }
+      })
+      .catch((error) => console.log(error));
+    }
   },
   beforeMount() {
     let url = "/api/machines_storage";
