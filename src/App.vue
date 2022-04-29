@@ -53,6 +53,12 @@
               title="Logout"
               v-on:click="logout"
             ></v-list-item>
+                     <v-list-item
+              v-if="logincheck"
+              prepend-icon="mdi-account"
+              title="Account setting"
+              to="/account/setting"
+            ></v-list-item>
             <v-list-item
               prepend-icon="mdi-refresh"
               title="Refresh"

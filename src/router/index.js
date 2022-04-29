@@ -3,6 +3,7 @@ import Index from "../views/Index.vue"
 import Login from "../views/Login.vue"
 import GraphView from "../views/Graph.vue"
 import MachineList from "../views/MachineList.vue"
+import Settings from "../views/Settings.vue"
 import MachineStorageList from "../views/MachineStorageList.vue"
 const routes = [{
         path: "/",
@@ -18,11 +19,11 @@ const routes = [{
         name: "MachineList",
         component: MachineList,
     },
-    //     {
-    //         path: "/account/setting",
-    //         name: "Settings",
-    //         component: Settings,
-    //     },
+    {
+        path: "/account/setting",
+        name: "Settings",
+        component: Settings,
+    },
     {
         path: "/storage/list",
         name: "MachineStorageList",
