@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h2 class="h2">Account Setting</h2>
+    <h2 class="h2">Manage Wallet</h2>
     <v-alert shaped prominent type="error" v-show="edit_error">
       Username or Password mustn,t be empty
     </v-alert>
@@ -119,7 +119,7 @@
 </template>
 <script>
 export default {
-  name: "Setting",
+  name: "Wallet",
   data() {
     return {
       username: "",

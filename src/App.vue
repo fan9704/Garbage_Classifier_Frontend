@@ -60,6 +60,12 @@
               to="/account/setting"
             ></v-list-item>
             <v-list-item
+              v-if="logincheck"
+              prepend-icon="mdi-cash-check"
+              title="Manage Wallet"
+              to="/account/wallet"
+            ></v-list-item>
+            <v-list-item
               prepend-icon="mdi-refresh"
               title="Refresh"
               v-on:click="refresh"

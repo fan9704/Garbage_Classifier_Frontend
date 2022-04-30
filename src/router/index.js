@@ -4,6 +4,7 @@ import Login from "../views/Login.vue"
 import GraphView from "../views/Graph.vue"
 import MachineList from "../views/MachineList.vue"
 import Settings from "../views/Settings.vue"
+import Wallet from "../views/Wallet.vue"
 import MachineStorageList from "../views/MachineStorageList.vue"
 const routes = [{
         path: "/",
@@ -29,11 +30,11 @@ const routes = [{
         name: "MachineStorageList",
         component: MachineStorageList,
     },
-    //     {
-    //         path: "/file",
-    //         name: "FileConverterView",
-    //         component: FileConverterView,
-    //     },
+    {
+        path: "/account/wallet",
+        name: "Wallet",
+        component: Wallet,
+    },
     {
         path: "/graph",
         name: "GraphView",
