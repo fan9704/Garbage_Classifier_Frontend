@@ -19,102 +19,21 @@
         ></v-text-field>
       </v-col>
     </v-row>
-    <v-row>
-      <v-col cols="12" md="8" data-aos="fade-right">
-        <v-text-field
-          v-model="email"
-          :rules="emailRules"
-          :counter="30"
-          label="email"
-          required
-        ></v-text-field>
-      </v-col>
-    </v-row>
-
-    <v-row>
-      <v-col cols="12" md="8" data-aos="fade-right">
-        <v-text-field
-          v-model="first_name"
-          :rules="nameRules"
-          :counter="30"
-          label="first name"
-          required
-        ></v-text-field>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="12" md="8" data-aos="fade-right">
-        <v-text-field
-          v-model="last_name"
-          :rules="nameRules"
-          :counter="30"
-          label="last name"
-          required
-        ></v-text-field>
-      </v-col>
-    </v-row>
-    <v-row
-      ><v-col cols="12">
-        <v-btn
-          :disabled="valid"
-          color="success"
-          class="mr-4"
-          @click="UpdateInfo"
-        >
-          Update Information
-        </v-btn>
-      </v-col></v-row
+     <v-row justify="center"
+       data-aos="fade-down"
+     data-aos-easing="linear"
+     data-aos-duration="1500">
+    <v-img
+    
+      lazy-src="/src/assets/wallet.png"
     >
-
-    <v-row>
-      <v-col cols="12" md="8" data-aos="fade-right">
-        <v-text-field
-          :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-          v-model="password"
-          :rules="passwordRules"
-          :counter="30"
-          label="New Password"
-          required
-          hint="At least 8 characters"
-          :type="show1 ? 'text' : 'password'"
-          @click:append="show1 = !show1"
-        ></v-text-field>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="12" md="8" data-aos="fade-right">
-        <v-text-field
-          :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-          v-model="confirm_password"
-          :rules="passwordRules"
-          :counter="30"
-          label="Confirm Password"
-          required
-          hint="At least 8 characters"
-          :type="show1 ? 'text' : 'password'"
-          @click:append="show1 = !show1"
-        ></v-text-field>
-      </v-col>
-    </v-row>
-    <v-checkbox
-      data-aos="fade-right"
-      v-model="checkbox"
-      :rules="[(v) => !!v || 'You must agree to continue!']"
-      label="Remember Me?"
-      required
-    ></v-checkbox>
-
-    <v-btn color="warning" class="mr-4" to="/"> Back to Index </v-btn>
-
-    <v-btn color="error" class="mr-4" @click="reset"> Reset Password</v-btn>
-    <v-btn
-      :disabled="valid"
-      color="success"
-      class="mr-4"
-      @click="UpdatePassword"
-    >
-      Update Password
-    </v-btn>
+      <template v-slot:placeholder>
+        <div class="d-flex align-center justify-center fill-height">
+          <span class="WalletValue">Wallet Value: ${{walletValue}}</span>
+        </div>
+      </template>
+    </v-img>
+  </v-row>
   </v-container>
 </template>
 <script>
@@ -128,22 +47,10 @@ export default {
       last_name: "",
       email: "",
       confirm_password: "",
-      nameRules: [
-        (v) => !!v || "Userame is required",
-        (v) => v.length <= 30 || "Userame must be less than 30 characters",
-      ],
-      emailRules: [
-        (v) => !!v || "E-mail is required",
-        (v) => /.+@.+/.test(v) || "E-mail must be valid",
-      ],
-      passwordRules: [
-        (v) => !!v || "Password is required",
-        (v) => v.length <= 30 || "Password must be less than 30 characters",
-        (v) => v == this.confirm_password,
-      ],
       checkbox: false, //Agree or notX
       edit_success: false,
       edit_error: false,
+      walletValue:0.0,
     };
   },
   methods: {
@@ -191,41 +98,15 @@ export default {
         })
         .catch((error) => console.log(error));
     },
-    UpdateInfo() {
-      let url = "/api/EditUserInfo";
-      let config = {
-        active: true,
-        email: this.email,
-        lastName: this.last_name,
-        name: this.first_name,
-        password: "string",
-        userName: this.username,
-      };
-    },
-    UpdatePassword() {
-      let config = {
-        username: this.username,
-        password: this.password,
-      };
-      let url = "/api/changePassword";
-      this.axios
-        .put(url, config)
-        .then((res) => {
-          console.log(res.data);
-        })
-        .catch((err) => console.log(err));
-    },
   },
   beforeMount() {
-    let url = `/api/userinfo/${this.$store.state.user}`;
+    let url = `/api/walletValue/${this.$store.state.user}`;
     this.axios
       .get(url)
       .then((res) => {
         console.log(res.data);
-        this.username = res.data.userName;
-        this.first_name = res.data.name;
-        this.last_name = res.data.lastName;
-        this.email = res.data.email;
+        this.username=this.$store.state.user;
+        this.walletValue=res.data;
       })
       .catch((error) => console.log(error));
   },
@@ -237,5 +118,9 @@ h2.h2 {
 }
 .v-alert {
   margin: 10px 0px;
+}
+.WalletValue{
+  font-size: 50px;
+  color: white;
 }
 </style>
