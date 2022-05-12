@@ -58,8 +58,9 @@
         </v-col>
       </v-row>
       <v-row >
-        <v-col cols="6" class="d-flex mb-6 justify-space-around"><v-btn color="secondary">Check User Valid</v-btn></v-col>
-         <v-col cols="6" class="d-flex mb-6 justify-space-around"><v-btn color="success" :disabled="MachineInfoBtn">Edit Machine Information</v-btn></v-col>
+        <v-col cols="4" class="d-flex mb-6 justify-space-around"><v-btn color="secondary" @click="CheckUserValid">Check User Valid</v-btn></v-col>
+         <v-col cols="4" class="d-flex mb-6 justify-space-around"><v-btn color="warning" @click="unlinkMachine">Unlink Machine</v-btn></v-col>
+        <v-col cols="4" class="d-flex mb-6 justify-space-around"><v-btn color="success" :disabled="MachineInfoBtn" @click="EditMachineInfo">Edit Machine Information</v-btn></v-col>
       </v-row>
     </v-container>
     <!--MachineInfoForm  -->
@@ -88,7 +89,7 @@
       ></v-col>
       <v-col cols="1" xs="12" sm="12" md="12" lg="1" class="d-flex">
         <v-btn flat color="success" @click="createMachine"
-          >Create Machine</v-btn
+          >Create <br> Machine</v-btn
         >
       </v-col>
     </v-row>
@@ -127,7 +128,11 @@
         data-aos="flip-right"
         justify="space-around"
       >
-        <span v-if="cert.current_user != null">{{
+        <span v-if="cert.current_user.userName == 'AnoymousUser'">
+          <v-icon color="red darken-2" large> mdi-null </v-icon>
+          No User
+        </span>
+                <span v-else-if="cert.current_user != null">{{
           cert.current_user.userName
         }}</span>
         <span v-else>
@@ -171,6 +176,7 @@ export default {
       MachineLock: "",
       CurrentUser: "",
       MachineInfoBtn:true,
+      UserID:0
     };
   },
   methods: {
@@ -216,6 +222,7 @@ export default {
         .then((res) => {
           this.MachineInfoForm = !this.MachineInfoForm;
           console.log(res.data);
+          this.MachineID=res.data.id;
           this.MachineLocation = res.data.location;
           this.UserLock = res.data.user_lock;
           this.MachineLock = res.data.machine_lock;
@@ -223,19 +230,81 @@ export default {
         })
         .catch((error) => console.log(error));
     },
+    CheckUserValid(){
+            let url = `/api/userinfo/${this.CurrentUser}`;
+      this.axios
+        .get(url)
+        .then((res) => {
+          console.log(res.data)
+          this.UserID=res.data.id;
+          if(res.data["userName"]==this.CurrentUser){
+            this.$swal.fire(
+            "User is valid!!",
+            `${this.CurrentUser} ~ `,
+            "success"
+          );
+          this.MachineInfoBtn=false;
+          }
+          
+        })
+        .catch((error) =>{
+          console.log(error)
+          this.$swal.fire(
+          "User invalid!!",
+          `${this.CurrentUser} Please Enter User Again `,
+          "error"
+        );
+        } );
+    },
+    EditMachineInfo(){
+        let url = `/api/machine/link`;
+        let config={
+            current_user: this.UserID,
+            id: this.MachineID
+        };
+        console.log(config)
+        this.axios
+          .patch(url,config)
+          .then((res) => {
+            this.MachineInfoForm = !this.MachineInfoForm;
+            console.log(res.data);
+            this.showAllMachine();
+          })
+          .catch((error) => console.log(error));
+    },
+    unlinkMachine(){
+          let url = `/api/machine/unlink`;
+        let config={
+            current_user: 0,
+            id: this.MachineID
+        };
+        console.log(config)
+        this.axios
+          .patch(url,config)
+          .then((res) => {
+            this.MachineInfoForm = !this.MachineInfoForm;
+            console.log(res.data);  
+            this.showAllMachine();
+          })
+          .catch((error) => console.log(error));
+    },
+    showAllMachine(){
+      let url = "/api/machines/";
+      this.axios
+        .get(url)
+        .then((res) => {
+          this.datanumber = res.data.length;
+          this.certs = res.data.splice(0, 0 + this.select_option);
+          setTimeout(() => {
+            this.progress = false;
+          }, 1000);
+        })
+        .catch((error) => console.log(error));
+      }
+
   },
   beforeMount() {
-    let url = "/api/machines/";
-    this.axios
-      .get(url)
-      .then((res) => {
-        this.datanumber = res.data.length;
-        this.certs = res.data.splice(0, 0 + this.select_option);
-        setTimeout(() => {
-          this.progress = false;
-        }, 1000);
-      })
-      .catch((error) => console.log(error));
+    this.showAllMachine();
   },
 };
 </script>

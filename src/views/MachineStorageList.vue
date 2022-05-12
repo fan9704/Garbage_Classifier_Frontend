@@ -81,7 +81,7 @@
         </select> -->
       </v-col>
       <v-col cols="6" xs="12" sm="12" md="12" lg="6" class="d-flex">
-    <v-select :items="MachineList" label="Search By Machine" v-model="SelectMachine" @change="findByMachine()" outlined />
+    <v-select :items="MachineList" label="Search By Machine" v-model="SelectMachine" v-on:change="findByMachine" outlined />
     </v-col>
 
     </v-row>
@@ -110,7 +110,7 @@
         {{ cert.garbageType.type_name }}
       </v-col>
       <v-col cols="2" sm="4" md="2" lg="2">
-        {{ cert.time_stamp }}
+        {{new Date(cert.time_stamp) }}
       </v-col>
       <v-col
         cols="2"
@@ -211,7 +211,7 @@ export default {
           this.MachineStorageInfoForm = !this.MachineStorageInfoForm;
           this.MachineLocation = res.data.machine.location;
           this.UserLock = res.data.garbageType.type_name;
-          this.MachineLock = res.data.time_stamp;
+          this.MachineLock = new Date(res.data.time_stamp);
           this.CurrentUser = res.data.storage;
           this.SelectGarbageTypeId=res.data.garbageType.id;
           this.SelectMachineId=res.data.machine.id;
