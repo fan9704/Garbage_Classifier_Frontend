@@ -19,7 +19,7 @@
               to="/"
             ></v-list-item>
             <v-list-item
-              v-if="logincheck"
+              v-if="Drawer"
               prepend-icon="mdi-account"
               title="Account setting"
               to="/account/setting"
@@ -42,25 +42,25 @@
               to="/graph"
             ></v-list-item>
             <v-list-item
-              v-if="!logincheck"
+              v-if="!Drawer"
               prepend-icon="mdi-account"
               title="Login/Register"
               to="/account/login"
             ></v-list-item>
             <v-list-item
-              v-if="logincheck"
+              v-if="Drawer"
               prepend-icon="mdi-logout"
               title="Logout"
               v-on:click="logout"
             ></v-list-item>
                      <v-list-item
-              v-if="logincheck"
+              v-if="Drawer"
               prepend-icon="mdi-account"
               title="Account setting"
               to="/account/setting"
             ></v-list-item>
             <v-list-item
-              v-if="logincheck"
+              v-if="Drawer"
               prepend-icon="mdi-cash-check"
               title="Manage Wallet"
               to="/account/wallet"
@@ -115,6 +115,7 @@ export default {
     drawer: false,
     group: null,
     logoutform: false,
+    Drawer:false
   }),
   methods: {
     getCookie(cname) {
@@ -159,6 +160,20 @@ export default {
     logincheck() {
       return this.$store.state.login;
     },
+  },
+  beforeCreate() {
+    let url= "/api/checkLogin";
+    this.axios.get(url)
+    .then((res)=>{
+      this.$store.state.user=res.data.userName;
+      // this.$swal.fire(
+      //   "Welcome!!",
+      //   `${this.$store.state.user} ~ `,
+      //   "success"
+      // );
+      this.Drawer=true;
+    })
+    .catch((err)=>{console.log(err)})
   },
 };
 </script>

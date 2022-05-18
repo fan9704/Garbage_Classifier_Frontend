@@ -128,17 +128,19 @@
         data-aos="flip-right"
         justify="space-around"
       >
-        <span v-if="cert.current_user.userName == 'AnoymousUser'">
+        <span v-if="cert.current_user != null">
+          <span v-if="cert.current_user.userName == 'AnoymousUser'">
           <v-icon color="red darken-2" large> mdi-null </v-icon>
           No User
         </span>
-                <span v-else-if="cert.current_user != null">{{
+          <span v-else> {{
           cert.current_user.userName
-        }}</span>
-        <span v-else>
-          <v-icon color="red darken-2" large> mdi-null </v-icon>
-          No User
-        </span>
+        }}
+        </span></span>
+         
+                <span v-else><v-icon  color="red darken-2" large> mdi-null </v-icon>
+          No User</span>
+   
       </v-col>
       <v-col cols="2" sm="4" md="2" data-aos="flip-right">
         <v-btn flat color="warning" @click="showMachineForm(cert.id)"
