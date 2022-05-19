@@ -108,6 +108,7 @@
 </template>
 
 <script>
+import { reactive, onMounted } from "vue";
 export default {
   name: "App",
   data: () => ({
@@ -117,6 +118,26 @@ export default {
     logoutform: false,
     Drawer:false
   }),
+  setup() {
+    const states = reactive({
+      deferredPrompt: null,
+    });
+    onMounted(() => {
+      window.addEventListener("beforeinstallprompt", e => {
+        e.preventDefault();
+        states.deferredPrompt = e;
+      });
+      window.addEventListener("appinstalled", () => {
+        states.deferredPrompt = null;
+      });
+      document.querySelector("#app").addEventListener("click", () => { 
+        if (states.deferredPrompt) {
+          states.deferredPrompt.prompt();
+          states.deferredPrompt = null;
+        }
+      });
+    });
+  },
   methods: {
     getCookie(cname) {
       let name = cname + "=";
