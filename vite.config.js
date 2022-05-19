@@ -23,7 +23,7 @@ export default defineConfig({
         proxy: {
             // 選項寫法
             '/api': {
-                target: 'http://140.125.207.230:8080',
+                target: 'http://localhost:8080',
                 changeOrigin: true,
                 rewrite: (path) => path.replace('', '')
             },

@@ -161,6 +161,12 @@ export default {
         `GoodBye ${this.$store.state.user} ~ `,
         "success"
       );
+      this.Drawer=false;
+      let url ="/api/logout";
+      this.axios.get(url)
+      .then((res)=>{console.log(res.data)})
+      .catch((err)=>{console.log(err)})
+
     },
     refresh() {
       let sessionid = this.getCookie("sessionid");
@@ -186,7 +192,10 @@ export default {
     let url= "/api/checkLogin";
     this.axios.get(url)
     .then((res)=>{
+      console.log(res.data)
       this.$store.state.user=res.data.userName;
+      this.$store.commit("login");
+
       // this.$swal.fire(
       //   "Welcome!!",
       //   `${this.$store.state.user} ~ `,
