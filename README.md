@@ -16,7 +16,7 @@ Powered By Vue3 and Vite
 
 [Backend Project](https://github.com/fan9704/Garbage_Classifier_Backend)
 
-[Hardware Project]()
+[Hardware Project](https://github.com/fan9704/Garbage_Classifier_Hardware)
 
 
 ![](https://imgdb.net/storage/uploads/8904403f2b093016211626b8dc27a9107a9dc7fea222ef486cdddf2189ce4e41.png)
