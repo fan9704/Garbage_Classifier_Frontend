@@ -108,6 +108,7 @@
 </template>
 
 <script>
+import { reactive, onMounted } from "vue";
 export default {
   name: "App",
   data: () => ({
@@ -117,6 +118,26 @@ export default {
     logoutform: false,
     Drawer:false
   }),
+  setup() {
+    const states = reactive({
+      deferredPrompt: null,
+    });
+    onMounted(() => {
+      window.addEventListener("beforeinstallprompt", e => {
+        e.preventDefault();
+        states.deferredPrompt = e;
+      });
+      window.addEventListener("appinstalled", () => {
+        states.deferredPrompt = null;
+      });
+      document.querySelector("#app").addEventListener("click", () => { 
+        if (states.deferredPrompt) {
+          states.deferredPrompt.prompt();
+          states.deferredPrompt = null;
+        }
+      });
+    });
+  },
   methods: {
     getCookie(cname) {
       let name = cname + "=";
@@ -140,6 +161,12 @@ export default {
         `GoodBye ${this.$store.state.user} ~ `,
         "success"
       );
+      this.Drawer=false;
+      let url ="/api/logout";
+      this.axios.get(url)
+      .then((res)=>{console.log(res.data)})
+      .catch((err)=>{console.log(err)})
+
     },
     refresh() {
       let sessionid = this.getCookie("sessionid");
@@ -165,7 +192,10 @@ export default {
     let url= "/api/checkLogin";
     this.axios.get(url)
     .then((res)=>{
+      console.log(res.data)
       this.$store.state.user=res.data.userName;
+      this.$store.commit("login");
+
       // this.$swal.fire(
       //   "Welcome!!",
       //   `${this.$store.state.user} ~ `,
