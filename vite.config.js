@@ -18,6 +18,8 @@ export default defineConfig({
     resolve: {
         alias: {
             '@': path.resolve(__dirname, 'src'),
+            'vue$': 'vue/dist/vue.esm.js',
+            'static': path.resolve(__dirname, '../static')
         },
     },
     server: {
