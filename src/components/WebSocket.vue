@@ -1,8 +1,18 @@
 <template>
-<v-container class="chatroom">
-    <v-btn @click="sendDataToServer">Send Data To Backend</v-btn>
+
+<v-container class="chatroom" >
+    <v-row  v-show="chatroomDrawer">
+        <v-col cols="12" class="d-flex justify-end mb-6">
+            <h5>Chat To Receptionist</h5>
+            <v-btn @click="sendDataToServer">Send Data To Backend</v-btn>
+        </v-col>
+    </v-row>
+            <v-row>
+        <v-col cols="12"  class="d-flex justify-end mb-6">
+            <v-btn @click="chatroomDrawer = !chatroomDrawer">Chat To Receptionist</v-btn>
+        </v-col>
+    </v-row>
 </v-container>
-    
 </template>
 
 <script>
@@ -14,6 +24,7 @@ export default{
             webSocket:null,
             ws:"",
             wsTimer:null,
+            chatroomDrawer:false,
         }
     },
     async mounted() {
@@ -81,6 +92,14 @@ export default{
 
 <style>
 .v-container .chatroom{
-
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 3;
+}
+.v-container .chatroom.v-row{
+    position: relative;
+    bottom: auto;
+    right: auto;
 }
 </style>
