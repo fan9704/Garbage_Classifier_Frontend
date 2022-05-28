@@ -68,26 +68,27 @@
     <v-row>
       <v-col cols="6" xs="12" sm="12" md="12" lg="6" class="d-flex">
         <v-select :items="option" label="Option" outlined />
-        <!-- <select
-          name="type"
-          id="type"
-          v-model="select_option"
-          @change="list_number"
-        >
-          <option value="All" selected disabled>Please Select Number</option>
-          <option v-bind:value="opt" :key="opt" v-for="opt in option">
-            {{ opt }}
-          </option>
-        </select> -->
+
       </v-col>
       <v-col cols="6" xs="12" sm="12" md="12" lg="6" class="d-flex">
-    <v-select :items="MachineList" label="Search By Machine" v-model="SelectMachine" v-on:change="findByMachine" outlined />
+                <select
+          name="type"
+          id="type"
+          label="Search By Machine"
+          v-model="SelectMachine"
+          v-on:change="findByMachine"
+        >
+          <option value="All" selected disabled>Please Select Number</option>
+          <option v-bind:value="opt" :key="opt" v-for="opt in MachineList">
+            {{ opt }}
+          </option>
+        </select>
+    <!-- <v-select :items="MachineList" label="Search By Machine" v-model="SelectMachine" v-on:change="findByMachine" outlined /> -->
     </v-col>
 
     </v-row>
     <v-row>
       <v-col cols="2" sm="4" md="2">ID</v-col>
-      <v-col cols="2" sm="4" md="2"> Machine Location </v-col>
       <v-col cols="2" sm="4" md="2"> Garbage Type </v-col>
       <v-col cols="2" sm="4" md="2"> Time Stamp </v-col>
       <v-col cols="2" sm="4" md="2"> Storage </v-col>
@@ -100,12 +101,9 @@
       data-aos="flip-right"
     >
       <v-col cols="2" sm="4" md="2" lg="2" data-aos="flip-right">
-        <!-- {{index + 1 + (page - 1) * select_option}} -->
         {{ cert.id }}
       </v-col>
-      <v-col cols="2" sm="4" md="2" lg="2" data-aos="flip-right">
-        {{ cert.machine.location }}
-      </v-col>
+
       <v-col cols="2" sm="4" md="2" lg="2" data-aos="flip-right">
         {{ cert.garbageType.type_name }}
       </v-col>
@@ -186,22 +184,27 @@ export default {
         .catch((error) => console.log(error));
     },
     findByMachine(){
-     alert("Hi")
-         let url = "/api/machines_storage";
-          this.axios
+          if(this.SelectMachine=="All"){
+                let url = "/api/machines_storage";
+                this.axios
+                  .get(url)
+                  .then((res) => {
+                    this.datanumber = res.data.length;
+                    this.certs = res.data.splice(0, 0 + this.select_option);
+                  })
+              .catch((error) => console.log(error));
+          }else{
+            let url = `/api/machines/location/?location=${this.SelectMachine}`;
+            this.axios
             .get(url)
             .then((res) => {
-              // this.datanumber = res.data.length;
-              // this.certs = res.data.splice(0, 0 + this.select_option);
               this.certs=[];
-              for(let i in this.certs){
-                if(! this.SelectMachine==this.certs[i].machine.location){
-                  this.certs.push(this.certs[i].machine.location)
-                }
+              for(let i in res.data[0].machineStorages){
+                this.certs.push(res.data[0].machineStorages[i]);
               }
-              console.log(this.MachineList)
             })
             .catch((error) => console.log(error));
+          }
     },
     showMachineForm(id) {
       let url = `/api/machine_storage/${id}`;
@@ -255,7 +258,18 @@ export default {
     }
   },
   beforeMount() {
-    let url = "/api/machines_storage";
+    let    url = "/api/machines";
+    this.axios
+      .get(url)
+      .then((res) => {
+        for(let i in res.data){
+          if(! this.MachineList.includes(res.data[i].location)){
+            this.MachineList.push(res.data[i].location)
+          }
+        }
+      })
+      .catch((error) => console.log(error));
+     url = "/api/machines_storage";
     this.axios
       .get(url)
       .then((res) => {
@@ -264,13 +278,10 @@ export default {
         setTimeout(() => {
           this.progress = false;
         }, 1000);
-        for(let i in this.certs){
-          if(! this.MachineList.includes(this.certs[i].machine.location)){
-            this.MachineList.push(this.certs[i].machine.location)
-          }
-        }
       })
       .catch((error) => console.log(error));
+
+
   },
 };
 </script>

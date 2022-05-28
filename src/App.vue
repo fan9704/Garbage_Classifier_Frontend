@@ -75,6 +75,7 @@
       </v-navigation-drawer>
       <v-main>
         <v-container fluid class="main-container">
+          <web-socket></web-socket>
           <router-view></router-view
         ></v-container>
       </v-main>
@@ -108,103 +109,94 @@
 </template>
 
 <script>
+import WebSocket from "./components/WebSocket.vue";
 import { reactive, onMounted } from "vue";
 export default {
-  name: "App",
-  data: () => ({
-    username: "",
-    drawer: false,
-    group: null,
-    logoutform: false,
-    Drawer:false
-  }),
-  setup() {
-    const states = reactive({
-      deferredPrompt: null,
-    });
-    onMounted(() => {
-      window.addEventListener("beforeinstallprompt", e => {
-        e.preventDefault();
-        states.deferredPrompt = e;
-      });
-      window.addEventListener("appinstalled", () => {
-        states.deferredPrompt = null;
-      });
-      document.querySelector("#app").addEventListener("click", () => { 
-        if (states.deferredPrompt) {
-          states.deferredPrompt.prompt();
-          states.deferredPrompt = null;
-        }
-      });
-    });
-  },
-  methods: {
-    getCookie(cname) {
-      let name = cname + "=";
-      let decodedCookie = decodeURIComponent(document.cookie);
-      let ca = decodedCookie.split(";");
-      for (let i = 0; i < ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) == " ") {
-          c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-          return c.substring(name.length, c.length);
-        }
-      }
-      return "";
+    name: "App",
+    data: () => ({
+        username: "",
+        drawer: false,
+        group: null,
+        logoutform: false,
+        Drawer: false
+    }),
+    setup() {
+        const states = reactive({
+            deferredPrompt: null,
+        });
+        onMounted(() => {
+            window.addEventListener("beforeinstallprompt", e => {
+                e.preventDefault();
+                states.deferredPrompt = e;
+            });
+            window.addEventListener("appinstalled", () => {
+                states.deferredPrompt = null;
+            });
+            document.querySelector("#app").addEventListener("click", () => {
+                if (states.deferredPrompt) {
+                    states.deferredPrompt.prompt();
+                    states.deferredPrompt = null;
+                }
+            });
+        });
     },
-    logout() {
-      this.$store.commit("logout");
-      this.$swal.fire(
-        "Logout Success!!",
-        `GoodBye ${this.$store.state.user} ~ `,
-        "success"
-      );
-      this.Drawer=false;
-      let url ="/api/logout";
-      this.axios.get(url)
-      .then((res)=>{console.log(res.data)})
-      .catch((err)=>{console.log(err)})
-
+    methods: {
+        getCookie(cname) {
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(";");
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == " ") {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        },
+        logout() {
+            this.$store.commit("logout");
+            this.$swal.fire("Logout Success!!", `GoodBye ${this.$store.state.user} ~ `, "success");
+            this.Drawer = false;
+            let url = "/api/logout";
+            this.axios.get(url)
+                .then((res) => { console.log(res.data); })
+                .catch((err) => { console.log(err); });
+        },
+        refresh() {
+            let sessionid = this.getCookie("sessionid");
+            console.log(sessionid);
+            this.axios
+                .post("/api/accounts/login/")
+                .then((res) => {
+                console.log(res.data);
+                if (res.data.User != null && res.data.User != undefined) {
+                    this.username = res.data.User;
+                    this.$store.commit("login");
+                }
+            })
+                .catch((err) => console.log(err));
+        },
     },
-    refresh() {
-      let sessionid = this.getCookie("sessionid");
-      console.log(sessionid);
-      this.axios
-        .post("/api/accounts/login/")
-        .then((res) => {
-          console.log(res.data);
-          if (res.data.User != null && res.data.User != undefined) {
-            this.username = res.data.User;
+    computed: {
+        logincheck() {
+            return this.$store.state.login;
+        },
+    },
+    beforeCreate() {
+        let url = "/api/checkLogin";
+        this.axios.get(url)
+            .then((res) => {
+            console.log(res.data);
+            this.$store.state.user = res.data.userName;
             this.$store.commit("login");
-          }
+            this.Drawer = true;
         })
-        .catch((err) => console.log(err));
+            .catch((err) => { console.log(err); });
     },
-  },
-  computed: {
-    logincheck() {
-      return this.$store.state.login;
-    },
-  },
-  beforeCreate() {
-    let url= "/api/checkLogin";
-    this.axios.get(url)
-    .then((res)=>{
-      console.log(res.data)
-      this.$store.state.user=res.data.userName;
-      this.$store.commit("login");
-
-      // this.$swal.fire(
-      //   "Welcome!!",
-      //   `${this.$store.state.user} ~ `,
-      //   "success"
-      // );
-      this.Drawer=true;
-    })
-    .catch((err)=>{console.log(err)})
-  },
+    components: { WebSocket }
 };
 </script>
 <style scoped>

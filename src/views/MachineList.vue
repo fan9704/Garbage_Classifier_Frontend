@@ -57,6 +57,20 @@
           ></v-text-field>
         </v-col>
       </v-row>
+      <v-row>
+        <v-col cols="3" xs="3" sm="3" md="1" lg="1">Picture</v-col>
+        <v-col cols="9" xs="9" sm="9" md="11" lg="11">
+       <v-img   :src="machinePicture">
+         <v-file-input
+    label="File input"
+    filled
+    prepend-icon="mdi-camera"
+    v-model="uploadPicture"
+    @change="convertPicture"
+  ></v-file-input>
+       </v-img>
+        </v-col>
+      </v-row>
       <v-row >
         <v-col cols="4" class="d-flex mb-6 justify-space-around"><v-btn color="secondary" @click="CheckUserValid">Check User Valid</v-btn></v-col>
          <v-col cols="4" class="d-flex mb-6 justify-space-around"><v-btn color="warning" @click="unlinkMachine">Unlink Machine</v-btn></v-col>
@@ -178,7 +192,10 @@ export default {
       MachineLock: "",
       CurrentUser: "",
       MachineInfoBtn:true,
-      UserID:0
+      UserID:0,
+      machinePicture:"",
+      MachineID:"",
+      uploadPicture:"",
     };
   },
   methods: {
@@ -229,6 +246,7 @@ export default {
           this.UserLock = res.data.user_lock;
           this.MachineLock = res.data.machine_lock;
           this.CurrentUser = res.data.current_user.userName;
+          this.machinePicture = res.data.machinePicture.binaryStream;
         })
         .catch((error) => console.log(error));
     },
@@ -259,11 +277,16 @@ export default {
         } );
     },
     EditMachineInfo(){
-        let url = `/api/machine/link`;
+        let url = `/api/machine/info/${this.MachineID}`;
         let config={
-            current_user: this.UserID,
-            id: this.MachineID
-        };
+          current_user: this.CurrentUser,
+          location: this.MachineLocation,
+          machinePicture: {
+            binaryStream: this.machinePicture
+          },
+          machine_lock: this.MachineLock,
+          user_lock: this.UserLock
+        }
         console.log(config)
         this.axios
           .patch(url,config)
@@ -302,6 +325,10 @@ export default {
           }, 1000);
         })
         .catch((error) => console.log(error));
+      },
+      convertPicture(){
+        const file =this.uploadPicture.files[0];
+        URL.createObjectURL(file)
       }
 
   },
