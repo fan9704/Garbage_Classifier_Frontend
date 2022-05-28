@@ -2,27 +2,26 @@
   <v-container>
     <!-- RWD -->
     <h2 class="h2">Garbage Record Data Analysis</h2>
-    <v-row class="mb6" no-gutters>
+    <!-- <v-row class="mb6" no-gutters>
       <v-col cols="0" xs="0" sm="0" md="3" lg="3"> </v-col>
       <v-col cols="12" xs="12" sm="12" md="6" lg="6">
         <DoughnutChart v-bind="MainProps" />
       </v-col>
       <v-col cols="0" xs="0" sm="0" md="3" lg="3"> </v-col>
-    </v-row>
+    </v-row> -->
     <v-row class="mb-6" no-gutters>
       <v-col cols="6" sm="12" md="6">
-        <DoughnutChart v-bind="doughnutChartProps"
-      /></v-col>
+         <DoughnutChart v-bind="MainProps" /></v-col>
       <v-col cols="6" sm="12" md="6">
-        <BarChart v-bind="barChartProps"
+        <BarChart v-bind="BarProps"
       /></v-col>
     </v-row>
     <v-row class="mb-6" no-gutters>
       <v-col cols="6" sm="12" md="6"
-        ><LineChart v-bind="lineChartProps"
+        ><LineChart v-bind="LineProps"
       /></v-col>
       <v-col cols="6" sm="12" md="6"
-        ><RadarChart v-bind="radarChartProps"
+        ><RadarChart v-bind="RadarProps"
       /></v-col>
     </v-row>
 
@@ -31,12 +30,12 @@
       <v-btn class="button" color="warning" @click="switchLegend"
         >Swicth legends</v-btn
       >
-      <v-btn class="button" color="warning" @click="AddDataSet"
+      <!-- <v-btn class="button" color="warning" @click="AddDataSet"
         >Add DataSet</v-btn
       >
       <v-btn class="button" color="warning" @click="RemoveDataSet"
         >Remove DataSet</v-btn
-      >
+      > -->
     </div>
   </v-container>
 </template>
@@ -143,18 +142,11 @@ export default {
       chartData: testData,
       options,
     });
-    const { barChartProps, barChartRef } = useBarChart({
-      chartData: testData,
-      options,
-    });
-    const { lineChartProps, lineChartRef } = useLineChart({
-      chartData: testData,
-      options,
-    });
     const { radarChartProps, radarChartRef } = useRadarChart({
       chartData: testData,
       options,
     });
+    //doughnutChart
     let MainProps = useDoughnutChart({
       chartData: MainData,
       options,
@@ -163,6 +155,33 @@ export default {
       chartData: MainData,
       options,
     }).doughnutChartRef;
+    //barChart
+    let BarProps = useBarChart({
+      chartData: MainData,
+      options,
+    }).barChartProps;
+    let BarRef = useBarChart({
+      chartData: MainData,
+      options,
+    }).barChartRef;
+    //LineChart
+    let LineProps = useLineChart({
+      chartData: MainData,
+      options,
+    }).lineChartProps;
+    let LineRef = useLineChart({
+      chartData: MainData,
+      options,
+    }).lineChartRef;
+    //RadarChart
+    let RadarProps = useRadarChart({
+      chartData: MainData,
+      options,
+    }).radarChartProps;
+    let RadarRef = useRadarChart({
+      chartData: MainData,
+      options,
+    }).radarChartRef;
     function shuffleData() {
       dataValues.value = shuffle(dataValues.value);
       totalAmountArray.value = shuffle(totalAmountArray.value);
@@ -183,18 +202,16 @@ export default {
       switchLegend,
       testData,
       options,
-      doughnutChartRef,
-      doughnutChartProps,
       AddDataSet,
       RemoveDataSet,
-      barChartProps,
-      barChartRef,
-      lineChartProps,
-      lineChartRef,
-      radarChartProps,
-      radarChartRef,
       MainProps,
       MainRef,
+      BarProps,
+      BarRef,
+      LineProps,
+      LineRef,
+      RadarProps,
+      RadarRef,
     };
   },
   beforeMount() {
