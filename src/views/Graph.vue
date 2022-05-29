@@ -86,26 +86,9 @@ export default {
           backgroundColor: ["#E63F00", "#FFAA33", "#BBFF66", "#009FCC"],
         },
       ],
-    }));
-    const testData = computed(() => ({
-      //<ChartData<"doughnut">>
-      labels: datalabel.value,
-      datasets: [
-        {
-          data: dataValues.value,
-          backgroundColor: [
-            "#77CEFF",
-            "#0079AF",
-            "#123E6B",
-            "#97B0C4",
-            "#A5C8ED",
-          ],
-        },
-      ],
-    }));
+    })); 
     let delayed;
-    const options = computed(() => ({
-      //<ChartOptions<"doughnut">>
+    let options = computed(() => ({
       animation: {
         onComplete: () => {
           delayed = true;
@@ -138,14 +121,50 @@ export default {
         },
       },
     }));
-    const { doughnutChartProps, doughnutChartRef } = useDoughnutChart({
-      chartData: testData,
-      options,
-    });
-    const { radarChartProps, radarChartRef } = useRadarChart({
-      chartData: testData,
-      options,
-    });
+    const MainData2 = computed(() => ({
+      labels: totalName.value,
+      datasets: [
+        {
+          label: "Grams",
+          data: totalAmountArray.value,
+          backgroundColor: ["#E63F00", "#FFAA33", "#BBFF66", "#009FCC"],
+        },
+      ],
+    }));
+    let ChartName;
+    let options2 = computed(() => ({
+      animation: {
+        onComplete: () => {
+          delayed = true;
+        },
+        delay: (context) => {
+          let delay = 0;
+          if (
+            context.type === "data" &&
+            context.mode === "default" &&
+            !delayed
+          ) {
+            delay = context.dataIndex * 300 + context.datasetIndex * 100;
+          }
+          return delay;
+        },
+      },
+      scales: {
+        myScale: {
+          type: "logarithmic",
+          position: toggleLegend.value ? "left" : "right",
+        },
+      },
+      plugins: {
+        legend: {
+          position: toggleLegend.value ? "top" : "bottom",
+        },
+        title: {
+          display: true,
+          text: `Total Recycling Record Grams`,
+        },
+      },
+    }));
     //doughnutChart
     let MainProps = useDoughnutChart({
       chartData: MainData,
@@ -156,31 +175,34 @@ export default {
       options,
     }).doughnutChartRef;
     //barChart
+    ChartName="Bar Chart";
     let BarProps = useBarChart({
-      chartData: MainData,
-      options,
+      chartData: MainData2,
+      options:options2,
     }).barChartProps;
     let BarRef = useBarChart({
-      chartData: MainData,
-      options,
+      chartData: MainData2,
+      options:options2,
     }).barChartRef;
     //LineChart
+    ChartName="Line Chart";
     let LineProps = useLineChart({
-      chartData: MainData,
-      options,
+      chartData: MainData2,
+      options:options2,
     }).lineChartProps;
     let LineRef = useLineChart({
-      chartData: MainData,
-      options,
+      chartData: MainData2,
+      options:options2,
     }).lineChartRef;
     //RadarChart
+    ChartName="Radar Chart";
     let RadarProps = useRadarChart({
-      chartData: MainData,
-      options,
+      chartData: MainData2,
+      options:options2,
     }).radarChartProps;
     let RadarRef = useRadarChart({
-      chartData: MainData,
-      options,
+      chartData: MainData2,
+      options:options2,
     }).radarChartRef;
     function shuffleData() {
       dataValues.value = shuffle(dataValues.value);
@@ -200,7 +222,6 @@ export default {
     return {
       shuffleData,
       switchLegend,
-      testData,
       options,
       AddDataSet,
       RemoveDataSet,
