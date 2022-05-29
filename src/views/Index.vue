@@ -14,7 +14,7 @@
     ></v-carousel-item>
   </v-carousel>
         
-        <v-col cols="6">
+        <v-col cols="6" xs="12" sm="12" md="6" lg="6">
           <v-hover v-slot="{ hover }" open-delay="300">
             <v-card data-aos="zoom-in">
               <v-img
@@ -49,7 +49,7 @@
           </v-hover>
         </v-col>
 
-        <v-col cols="6">
+        <v-col cols="6" xs="12" sm="12" md="6" lg="6">
           <v-hover v-slot="{ hover }" open-delay="300">
             <v-card data-aos="zoom-in">
               <v-img

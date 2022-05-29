@@ -171,9 +171,8 @@ export default {
             this.axios
                 .post("/api/accounts/login/")
                 .then((res) => {
-                console.log(res.data);
-                if (res.data.User != null && res.data.User != undefined) {
-                    this.username = res.data.User;
+                if (res.data.userName != null && res.data.userName != undefined) {
+                    this.username = res.data.userName;
                     this.$store.commit("login");
                 }
             })
@@ -189,7 +188,6 @@ export default {
         let url = "/api/checkLogin";
         this.axios.get(url)
             .then((res) => {
-            console.log(res.data);
             this.$store.state.user = res.data.userName;
             this.$store.commit("login");
             this.Drawer = true;

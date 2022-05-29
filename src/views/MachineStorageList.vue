@@ -88,11 +88,11 @@
 
     </v-row>
     <v-row>
-      <v-col cols="2" sm="4" md="2">ID</v-col>
-      <v-col cols="2" sm="4" md="2"> Garbage Type </v-col>
-      <v-col cols="2" sm="4" md="2"> Time Stamp </v-col>
-      <v-col cols="2" sm="4" md="2"> Storage </v-col>
-      <v-col cols="2" sm="4" md="2"> Operation </v-col>
+      <v-col cols="2" xs="4" sm="4" md="2">ID</v-col>
+      <v-col cols="2" xs="4" sm="4" md="2"> Garbage Type </v-col>
+      <v-col cols="2" xs="4" sm="4" md="2"> Time Stamp </v-col>
+      <v-col cols="2" xs="4" sm="4" md="2"> Storage </v-col>
+      <v-col cols="2" xs="4" sm="4" md="2"> Operation </v-col>
     </v-row>
     <v-row
       :key="index"
@@ -100,18 +100,18 @@
       class="certs-row"
       data-aos="flip-right"
     >
-      <v-col cols="2" sm="4" md="2" lg="2" data-aos="flip-right">
+      <v-col cols="2" xs="4" sm="4" md="2" lg="2" data-aos="flip-right">
         {{ cert.id }}
       </v-col>
 
-      <v-col cols="2" sm="4" md="2" lg="2" data-aos="flip-right">
+      <v-col cols="2" xs="4" sm="4" md="2" lg="2" data-aos="flip-right">
         {{ cert.garbageType.type_name }}
       </v-col>
-      <v-col cols="2" sm="4" md="2" lg="2">
+      <v-col cols="2" xs="4" sm="4" md="2" lg="2">
         {{new Date(cert.time_stamp) }}
       </v-col>
       <v-col
-        cols="2"
+        cols="2" xs="4"
         sm="4"
         md="2"
         lg="2"
@@ -128,7 +128,7 @@
         }}
         </span>
       </v-col>
-      <v-col cols="2" sm="4" md="2" data-aos="flip-right">
+      <v-col cols="2" xs="4" sm="4" md="2" data-aos="flip-right">
         <v-btn flat color="warning" @click="showMachineForm(cert.id)"
           >Edit Info</v-btn
         >
@@ -288,8 +288,8 @@ export default {
 <style scoped>
 select {
   padding: 0px 50px;
-  width: 30%;
-  background: #aaa;
+  width: 100%;
+  background: rgb(184, 175, 175);
 }
 option {
   background: #fff;

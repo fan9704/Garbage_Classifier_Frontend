@@ -1,39 +1,40 @@
 <template>
   <v-container>
-    <h2 class="h2">Manage Wallet</h2>
-    <v-alert shaped prominent type="error" v-show="edit_error">
-      Username or Password mustn,t be empty
-    </v-alert>
-    <v-alert shaped outlined type="success" v-show="edit_success">
-      Edit Your Profile Success
-    </v-alert>
+    <v-row>
+      <v-col cols="12" md="8">
+        <h2 class="h2">Manage Wallet</h2>
+        <v-alert shaped prominent type="error" v-show="edit_error">
+          Wallet Value Not Found
+        </v-alert>
+        <v-alert shaped outlined type="success" v-show="edit_success">
+          Edit Your Profile Success
+        </v-alert></v-col
+      >
+    </v-row>
+
     <v-row>
       <v-col cols="12" md="8" data-aos="fade-right">
         <v-text-field
           v-model="username"
-          :rules="nameRules"
-          :counter="30"
           label="Username"
           disabled
           required
         ></v-text-field>
       </v-col>
     </v-row>
-     <v-row justify="center"
-       data-aos="fade-down"
-     data-aos-easing="linear"
-     data-aos-duration="1500">
-    <v-img
-    
-      lazy-src="/src/assets/wallet.png"
+
+    <v-row
+      justify="center"
+      data-aos="fade-down"
+      data-aos-easing="linear"
+      data-aos-duration="1500"
     >
-      <template v-slot:placeholder>
-        <div class="d-flex align-center justify-center fill-height">
-          <span class="WalletValue">Wallet Value: ${{walletValue}}</span>
-        </div>
-      </template>
-    </v-img>
-  </v-row>
+      <v-col cols="12" md="8">
+        <v-parallax dark src="/src/assets/wallet.png">
+          <h1 class="font-weight-thin mb-4 walletValue">${{ walletValue }}</h1>
+        </v-parallax></v-col
+      >
+    </v-row>
   </v-container>
 </template>
 <script>
@@ -50,7 +51,7 @@ export default {
       checkbox: false, //Agree or notX
       edit_success: false,
       edit_error: false,
-      walletValue:0.0,
+      walletValue: 0.0,
     };
   },
   methods: {
@@ -99,16 +100,29 @@ export default {
         .catch((error) => console.log(error));
     },
   },
-  beforeMount() {
-    let url = `/api/walletValue/${this.$store.state.user}`;
+  mounted() {
+    let url = "/api/checkLogin";
     this.axios
       .get(url)
       .then((res) => {
-        console.log(res.data);
-        this.username=this.$store.state.user;
-        this.walletValue=res.data;
+        this.$store.state.user = res.data.userName;
+        this.username = res.data.userName;
+        this.$store.commit("login");
+        url = `/api/walletValue/${this.$store.state.user}`;
+        this.axios
+          .get(url)
+          .then((res) => {
+            console.log(res.data);
+            this.walletValue = res.data;
+          })
+          .catch((error) => {
+            console.log(error)
+            this.edit_error=true;
+            });
       })
-      .catch((error) => console.log(error));
+      .catch((err) => {
+        console.log(err);
+      });
   },
 };
 </script>
@@ -119,8 +133,14 @@ h2.h2 {
 .v-alert {
   margin: 10px 0px;
 }
-.WalletValue{
-  font-size: 50px;
+.walletValue {
+  vertical-align: middle;
+  font-size: 72px;
   color: white;
+  padding: auto;
+  margin: auto;
+  text-align: center;
+  position: relative;
+  top: 50%;
 }
 </style>

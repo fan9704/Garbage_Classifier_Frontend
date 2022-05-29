@@ -65,7 +65,7 @@ export default{
         },
         wsMessageHanler(event){
             console.log("wsMessageHanler");
-            console.log(event);
+            console.log(event.data);
         },
         wsErrorHanler(event){
             console.log(event,"Communication has error");
