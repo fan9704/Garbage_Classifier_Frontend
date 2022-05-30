@@ -124,7 +124,7 @@
           Forget Password
         </v-btn>
         <v-btn
-          :disabled="!valid"
+
           color="success"
           class="mr-4"
           prepend-icon="mdi-login"
@@ -210,7 +210,6 @@
 
         <v-btn color="error" class="mr-4" @click="reset"> Reset</v-btn>
         <v-btn
-          :disabled="!valid"
           color="success"
           class="mr-4"
           @click="register"
