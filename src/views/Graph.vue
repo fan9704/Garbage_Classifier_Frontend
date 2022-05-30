@@ -244,16 +244,16 @@ export default {
         let tempPaper = [];
         let tempALcan = [];
         for (let i in res.data) {
-          if (res.data[i].garbage_type["id"] == 0) {
+          if (res.data[i].garbage_type.id == 0) {
             tempPlastic.push(res.data[i]);
             this.totalPlastic += res.data[i].weight;
-          } else if (res.data[i].garbage_type["id"] == 1) {
+          } else if (res.data[i].garbage_type.id == 1) {
             tempIroncan.push(res.data[i]);
             this.totalIroncan += res.data[i].weight;
-          } else if (res.data[i].garbage_type["id"] == 2) {
+          } else if (res.data[i].garbage_type.id == 2) {
             tempPaper.push(res.data[i]);
             this.totalPaper += res.data[i].weight;
-          } else if (res.data[i].garbage_type["id"] == 3) {
+          } else if (res.data[i].garbage_type.id == 3) {
             tempALcan.push(res.data[i]);
             this.totalALcan += res.data[i].weight;
           }
