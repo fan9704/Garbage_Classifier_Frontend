@@ -40,7 +40,7 @@ export default{
             }
         },
         wsInit(){
-            const wsuri="ws://localhost:8080/websocket/badao";
+            const wsuri="ws://140.125.207.230:8080/websocket/badao";
             this.ws=wsuri;
             if(!this.wsIsRun)return
             this.wsDestroy()

@@ -26,7 +26,7 @@ export default defineConfig({
         proxy: {
             // 選項寫法
             '/api': {
-                target: 'http://localhost:8080',
+                target: 'http://www.lab-fan9704.eu.org',
                 changeOrigin: true,
                 rewrite: (path) => path.replace('', '')
             },

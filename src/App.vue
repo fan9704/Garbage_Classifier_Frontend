@@ -78,9 +78,9 @@
           <web-socket></web-socket>
           <router-view></router-view
         ></v-container>
+        
       </v-main>
-    </v-layout>
-    <v-footer app>
+         <v-footer app>
       <v-card
         elevation="0"
         rounded="0"
@@ -101,10 +101,12 @@
         <v-divider></v-divider>
 
         <v-card-text class="text-white">
-          {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
+          {{ new Date().getFullYear() }} — <strong>IM Garbage System</strong>
         </v-card-text>
       </v-card>
     </v-footer>
+    </v-layout>
+
   </v-app>
 </template>
 
@@ -199,6 +201,7 @@ export default {
 </script>
 <style scoped>
 .v-footer {
+  position: relative;
   margin: 0;
   padding: 0;
 }
