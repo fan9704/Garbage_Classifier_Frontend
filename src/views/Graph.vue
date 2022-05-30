@@ -83,7 +83,7 @@ export default {
       datasets: [
         {
           data: totalAmountArray.value,
-          backgroundColor: ["#E63F00", "#FFAA33", "#BBFF66", "#009FCC"],
+          backgroundColor: ["#FFD954", "#E4B660", "#F2AB39", "#69491A"],
         },
       ],
     })); 
@@ -127,7 +127,7 @@ export default {
         {
           label: "Grams",
           data: totalAmountArray.value,
-          backgroundColor: ["#E63F00", "#FFAA33", "#BBFF66", "#009FCC"],
+          backgroundColor: ["#FFD954", "#E4B660", "#F2AB39", "#69491A"],
         },
       ],
     }));
