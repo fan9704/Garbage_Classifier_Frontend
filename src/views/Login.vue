@@ -280,6 +280,7 @@ export default {
               this.$store.commit("login");
               this.$store.state.user = this.username;
               this.$swal.fire(  'Login Success!!',`Welcome ${this.username} ~ `,'success');
+              window.location.href="/";
               this.$router.push({ name: "index" });
             } else {
               this.error = true;
