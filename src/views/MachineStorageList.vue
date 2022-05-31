@@ -14,7 +14,7 @@
     <!--MachineInfoForm  -->
     <v-container v-show="MachineStorageInfoForm" class="MachineInfoForm">
       <v-row
-        ><h2>Edit Machine Information</h2>
+        ><h2>Edit Machine Storage Information</h2>
         <v-btn class="closeButton" color="error" size="small" @click="MachineStorageInfoForm= !MachineStorageInfoForm" >X </v-btn></v-row
       >
       <v-row>
@@ -64,7 +64,7 @@
       </v-row>
     </v-container>
     <!--MachineInfoForm  -->
-    <h2>Machine List</h2>
+    <h2>Machine Storage List</h2>
     <v-row>
       <v-col cols="6" xs="12" sm="12" md="12" lg="6" class="d-flex">
         <v-select :items="option" label="Option" outlined />
