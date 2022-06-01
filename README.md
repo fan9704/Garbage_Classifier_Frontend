@@ -18,8 +18,20 @@ Powered By Vue3 and Vite
 
 [Hardware Project](https://github.com/fan9704/Garbage_Classifier_Hardware)
 
+----
+
+### Software Interaction
 
 ![](https://imgdb.net/storage/uploads/8904403f2b093016211626b8dc27a9107a9dc7fea222ef486cdddf2189ce4e41.png)
+
+----
+
+![](https://imgdb.net/storage/uploads/8904403f2b093016211626b8dc27a9107a9dc7fea222ef486cdddf2189ce4e41.png)
+
+----
+
+![](https://imgdb.net/storage/uploads/ae3a9af130234554cd6a0b53b1fd118ec4e5a6bea284110905d53620c01132e0.png)
+
 
 ----
 
