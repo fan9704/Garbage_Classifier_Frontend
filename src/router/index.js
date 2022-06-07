@@ -6,6 +6,7 @@ import MachineList from "../views/MachineList.vue"
 import Settings from "../views/Settings.vue"
 import Wallet from "../views/Wallet.vue"
 import MachineStorageList from "../views/MachineStorageList.vue"
+import RealtimeBase from "../components/RealtimeBase.vue"
 const routes = [{
         path: "/",
         name: "index",
@@ -40,6 +41,11 @@ const routes = [{
         name: "GraphView",
         component: GraphView,
     },
+    {
+        path: "/realtime",
+        name: "RealtimeBase",
+        component: RealtimeBase
+    }
 ];
 
 const router = createRouter({
