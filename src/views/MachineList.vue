@@ -69,6 +69,8 @@
     @change="convertPicture"
   ></v-file-input>
        </v-img>
+           <input multiple type="file" @change="fileChange">
+    <button @click="upload">upload</button>
         </v-col>
       </v-row>
       <v-row >
@@ -196,6 +198,7 @@ export default {
       machinePicture:"",
       MachineID:"",
       uploadPicture:"",
+      formData: new FormData()
     };
   },
   methods: {
@@ -329,8 +332,23 @@ export default {
       convertPicture(){
         const file =this.uploadPicture.files[0];
         URL.createObjectURL(file)
+      },
+      fileChange(e) {
+          for (var i = 0; i < e.target.files.length; i++) {
+            this.formData.append('file', e.target.files[i]) //用迴圈抓出多少筆再append回來
+          }
+      },
+      upload() {
+        let config={
+            "machinePicture": {
+              "binaryStream": this.formData
+            }
+        }
+          this.axios.patch(`/api/machine/picture/${this.MachineID}`,config 
+          )
+          .then((res)=>{console.log(res.data)})
+          .catch((err)=>{console.log(err)})
       }
-
   },
   beforeMount() {
     this.showAllMachine();
