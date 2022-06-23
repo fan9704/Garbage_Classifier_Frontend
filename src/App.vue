@@ -41,11 +41,17 @@
               title="Graph"
               to="/graph"
             ></v-list-item>
-                        <v-list-item
+            <v-list-item
               prepend-icon="mdi-database"
               title="RealtimeBase"
               to="/realtime"
             ></v-list-item>
+            <v-list-item
+              prepend-icon="mdi-database"
+              title="ListRealtimeBase"
+              to="/tutorials"
+            ></v-list-item>
+            
             <v-list-item
               v-if="!Drawer"
               prepend-icon="mdi-account"

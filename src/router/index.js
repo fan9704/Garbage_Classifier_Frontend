@@ -7,6 +7,7 @@ import Settings from "../views/Settings.vue"
 import Wallet from "../views/Wallet.vue"
 import MachineStorageList from "../views/MachineStorageList.vue"
 import RealtimeBase from "../components/RealtimeBase.vue"
+import TutorialList from "../components/TutorialsList.vue"
 const routes = [{
         path: "/",
         name: "index",
@@ -45,7 +46,12 @@ const routes = [{
         path: "/realtime",
         name: "RealtimeBase",
         component: RealtimeBase
-    }
+    },
+    {
+        path: "/tutorials",
+        name: "tutorials",
+        component: TutorialList
+    },
 ];
 
 const router = createRouter({
