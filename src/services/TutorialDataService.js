@@ -23,6 +23,7 @@ class TutorialDataService {
         return db.remove();
     }
 }
+const tutorialDataService =new TutorialDataService();
 class TutorialDataService2 {
     getAll() {
         return db2;
@@ -44,5 +45,5 @@ class TutorialDataService2 {
         return db2.remove();
     }
 }
-// export default new TutorialDataService();
-export {TutorialDataService2,TutorialDataService};
+const tutorialDataService2 =new TutorialDataService2();
+export {tutorialDataService2,tutorialDataService};

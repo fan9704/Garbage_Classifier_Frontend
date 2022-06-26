@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import TutorialDataService from "../services/TutorialDataService";
+import {tutorialDataService} from "../services/TutorialDataService";
 export default {
   name: "RealtimeBase",
   data() {
@@ -50,13 +50,13 @@ export default {
   },
   methods: {
     saveTutorial() {
-      var data = {
+      const data = {
         title: this.tutorial.title,
         description: this.tutorial.description,
         published: false
       };
 
-      TutorialDataService.create(data)
+      tutorialDataService.create(data)
         .then(() => {
           console.log("Created new item successfully!");
           this.submitted = true;
