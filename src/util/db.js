@@ -1,6 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/database";
-
+import "firebase/firestore";
 let config = {
     apiKey: "AIzaSyAk7JJfK_omrrPwodG4eDBKBs_VgkfOUQ4",
     authDomain: "garbageclassifierapp.firebaseapp.com",
@@ -14,4 +14,7 @@ let config = {
 
 firebase.initializeApp(config);
 
-export default firebase.database();
+// export default firebase.database();
+const firestore =firebase.firestore();
+const realtimeBase=firebase.database();
+export { firestore,realtimeBase };
