@@ -10,3 +10,5 @@ dist-ssr
 /.idea/Garbage_Classifier_Frontend.iml
 /.idea/modules.xml
 /.idea/vcs.xml
+/dist
+yarn.lock
