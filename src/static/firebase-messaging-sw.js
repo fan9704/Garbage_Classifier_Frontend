@@ -1,9 +1,16 @@
 import firebase from "firebase/app";
 
-importScripts('https://www.gstatic.com/firebasejs/5.0.0/firebase-app.js');
-importScripts('https://www.gstatic.com/firebasejs/5.0.0/firebase-messaging.js');
+importScripts('https://www.gstatic.com/firebasejs/7.2.3/firebase-app.js');
+importScripts('https://www.gstatic.com/firebasejs/7.2.3/firebase-messaging.js');
 firebase.initializeApp({
-    messagingSenderId: 'YOUR_SENDER_ID'
+    apiKey: "AIzaSyAk7JJfK_omrrPwodG4eDBKBs_VgkfOUQ4",
+    authDomain: "garbageclassifierapp.firebaseapp.com",
+    projectId: "garbageclassifierapp",
+    storageBucket: "garbageclassifierapp.appspot.com",
+    messagingSenderId: "46587136702",
+    appId: "1:46587136702:web:d824ff53ce105b830a2cef",
+    measurementId: "G-322FYWH2NB",
+    databaseURL: "https://garbageclassifierapp-default-rtdb.firebaseio.com",
 });
 const messaging = firebase.messaging();
 
