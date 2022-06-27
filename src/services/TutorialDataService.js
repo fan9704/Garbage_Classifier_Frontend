@@ -1,8 +1,8 @@
 import {realtimeBase,firestore} from "../util/db" ;
 
 const db = realtimeBase.ref("/tutorials");
-const db2=firestore.ref("/tutorials");
-class TutorialDataService {
+const db2=firestore.collection("/tutorials");
+class TutorialDataService2 {
     getAll() {
         return db;
     }
@@ -23,27 +23,20 @@ class TutorialDataService {
         return db.remove();
     }
 }
-const tutorialDataService =new TutorialDataService();
-class TutorialDataService2 {
+const tutorialDataService2 =new TutorialDataService2();
+class TutorialDataService  {
     getAll() {
         return db2;
     }
-
     create(tutorial) {
-        return db2.push(tutorial);
+        return db2.add(tutorial);
     }
-
-    update(key, value) {
-        return db2.child(key).update(value);
+    update(id, value) {
+        return db2.doc(id).update(value);
     }
-
-    delete(key) {
-        return db2.child(key).remove();
-    }
-
-    deleteAll() {
-        return db2.remove();
+    delete(id) {
+        return db2.doc(id).delete();
     }
 }
-const tutorialDataService2 =new TutorialDataService2();
+const tutorialDataService =new TutorialDataService();
 export {tutorialDataService2,tutorialDataService};

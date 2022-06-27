@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import TutorialDataService from "../services/TutorialDataService";
+import {tutorialDataService2} from "../services/TutorialDataService";
 
 export default {
   name: "tutorial",
@@ -79,7 +79,7 @@ export default {
   },
   methods: {
     updatePublished(status) {
-      TutorialDataService.update(this.currentTutorial.key, {
+      tutorialDataService2.update(this.currentTutorial.key, {
         published: status,
       })
         .then(() => {
@@ -97,7 +97,7 @@ export default {
         description: this.currentTutorial.description,
       };
 
-      TutorialDataService.update(this.currentTutorial.key, data)
+      tutorialDataService2.update(this.currentTutorial.key, data)
         .then(() => {
           this.message = "The tutorial was updated successfully!";
         })
@@ -107,7 +107,7 @@ export default {
     },
 
     deleteTutorial() {
-      TutorialDataService.delete(this.currentTutorial.key)
+      tutorialDataService2.delete(this.currentTutorial.key)
         .then(() => {
           this.$emit("refreshList");
         })

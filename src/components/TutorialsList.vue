@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import TutorialDataService from "../services/TutorialDataService";
+import {tutorialDataService2} from "../services/TutorialDataService";
 import TutorialDetails from "./Tutorial.vue";
 
 export default {
@@ -76,7 +76,7 @@ export default {
     },
 
     removeAllTutorials() {
-      TutorialDataService.deleteAll()
+      tutorialDataService2.deleteAll()
         .then(() => {
           this.refreshList();
         })
@@ -86,10 +86,10 @@ export default {
     },
   },
   mounted() {
-    TutorialDataService.getAll().on("value", this.onDataChange);
+    tutorialDataService2.getAll().on("value", this.onDataChange);
   },
   beforeDestroy() {
-    TutorialDataService.getAll().off("value", this.onDataChange);
+    tutorialDataService2.getAll().off("value", this.onDataChange);
   }
 };
 </script>
