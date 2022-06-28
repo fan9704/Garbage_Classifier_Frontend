@@ -1,4 +1,5 @@
 <template>
+<!--  <ReloadPWA />-->
   <v-app>
     <v-layout style="overflow: hidden">
       <v-app-bar absolute color="warning">
@@ -124,6 +125,7 @@
 <script>
 import WebSocket from "./components/WebSocket.vue";
 import { reactive, onMounted } from "vue";
+// import ReloadPWA from "./components/ReloadPWA.vue";
 export default {
     name: "App",
     data: () => ({
@@ -207,7 +209,12 @@ export default {
         })
             .catch((err) => { console.log(err); });
     },
-    components: { WebSocket }
+    mounted() {
+      console.log("Firebase cloud messaging object",this.$messaging);
+    },
+    components: {
+        WebSocket
+      }
 };
 </script>
 <style scoped>
