@@ -44,13 +44,13 @@
             ></v-list-item>
             <v-list-item
               prepend-icon="mdi-database"
-              title="RealtimeBase"
-              to="/realtime"
+              title="firestore"
+              to="/firestore"
             ></v-list-item>
             <v-list-item
               prepend-icon="mdi-database"
-              title="ListRealtimeBase"
-              to="/tutorials"
+              title="RealtimeBase"
+              to="/realtime"
             ></v-list-item>
             
             <v-list-item

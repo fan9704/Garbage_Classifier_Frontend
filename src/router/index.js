@@ -43,12 +43,12 @@ const routes = [{
         component: GraphView,
     },
     {
-        path: "/realtime",
+        path: "/firestore",
         name: "RealtimeBase",
         component: RealtimeBase
     },
     {
-        path: "/tutorials",
+        path: "/realtime",
         name: "tutorials",
         component: TutorialList
     },
