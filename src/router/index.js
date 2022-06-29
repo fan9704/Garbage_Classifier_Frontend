@@ -6,8 +6,8 @@ import MachineList from "../views/MachineList.vue"
 import Settings from "../views/Settings.vue"
 import Wallet from "../views/Wallet.vue"
 import MachineStorageList from "../views/MachineStorageList.vue"
+import Firestore from "../components/Firestore.vue"
 import RealtimeBase from "../components/RealtimeBase.vue"
-import TutorialList from "../components/TutorialsList.vue"
 const routes = [{
         path: "/",
         name: "index",
@@ -44,13 +44,13 @@ const routes = [{
     },
     {
         path: "/firestore",
-        name: "RealtimeBase",
-        component: RealtimeBase
+        name: "Firestore",
+        component: Firestore
     },
     {
         path: "/realtime",
-        name: "tutorials",
-        component: TutorialList
+        name: "RealtimeBase",
+        component: RealtimeBase
     },
 ];
 

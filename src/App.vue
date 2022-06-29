@@ -44,7 +44,7 @@
             ></v-list-item>
             <v-list-item
               prepend-icon="mdi-database"
-              title="firestore"
+              title="Firestore"
               to="/firestore"
             ></v-list-item>
             <v-list-item
