@@ -37,36 +37,42 @@
     </v-container>
   </v-form>
   <!--  List Data-->
+
   <v-form>
     <v-container>
-      <div class="list row">
-        <div class="col-md-6">
-          <h4>Tutorials List</h4>
-          <ul class="list-group">
-            <li
-                class="list-group-item"
-                :class="{ active: index == currentIndex }"
-                v-for="(tutorial, index) in tutorials"
-                :key="index"
-                @click="setActiveTutorial(tutorial, index)"
-            >
-              {{ tutorial.title }}
-            </li>
-          </ul>
-        </div>
-        <div class="col-md-6">
-          <div v-if="currentTutorial">
-            <Firestore-Form
-                :tutorial="currentTutorial"
-                @refreshList="refreshList"
-            />
-          </div>
-          <div v-else>
-            <br />
-            <p>Please click on a Tutorial...</p>
-          </div>
-        </div>
-      </div>
+      <h4>Tutorials List Firestore Version</h4>
+      <v-row
+          class="row-list"
+          :class="{ active: index == currentIndex }"
+          v-for="(tutorial, index) in tutorials"
+          :key="index"
+          @click="setActiveTutorial(tutorial, index)"
+      >
+        <v-col class="index" cols="2" md="2">{{index}}</v-col>
+        <v-col cols="10" md="10">{{ tutorial.title }}</v-col>
+
+      </v-row>
+      <v-row>
+        <v-col><v-btn  @click="removeAllTutorials">Remove All</v-btn></v-col>
+      </v-row>
+    </v-container>
+  </v-form>
+<!--  Form Data-->
+  <v-form class="description-form">
+    <v-container>
+      <v-row v-if="currentTutorial">
+        <v-col cols="12">
+          <FirestoreForm
+              :tutorial="currentTutorial"
+              @refreshList="refreshList"
+          />
+        </v-col>
+      </v-row>
+      <v-row v-else>
+        <v-col cols="12">
+          <p>Please click on a Tutorial...</p>
+        </v-col>
+      </v-row>
     </v-container>
   </v-form>
 </template>
@@ -79,16 +85,17 @@ export default {
   components: { FirestoreForm },
   data() {
     return {
+      tutorials: [],
+      currentTutorial: null,
+      currentIndex: -1,
+      unsubscribe: null,
       tutorial: {
         title: "",
         description: "",
-        published: false,
-        tutorials: [],
-        currentTutorial: null,
-        currentIndex: -1,
-        unsubscribe: null
+        published: false
       },
-      submitted: false
+      submitted: false,
+      message: ""
     };
   },
   methods: {
@@ -129,6 +136,7 @@ export default {
         });
       });
       this.tutorials = _tutorials;
+      console.log(this.tutorials)
     },
     refreshList() {
       this.currentTutorial = null;
@@ -136,7 +144,6 @@ export default {
     },
     setActiveTutorial(tutorial, index) {
       this.currentTutorial = tutorial;
-      console.log(this.currentTutorial)
       this.currentIndex = index;
     },
   },
@@ -144,7 +151,7 @@ export default {
     this.unsubscribe = tutorialDataService.getAll().orderBy("title", "asc").onSnapshot(this.onDataChange);
   },
   beforeDestroy() {
-    this.unsubscribe();
+      this.unsubscribe();
   }
 };
 </script>

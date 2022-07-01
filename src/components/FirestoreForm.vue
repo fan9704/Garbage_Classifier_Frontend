@@ -1,4 +1,5 @@
 <template>
+  <v-container>
   <div v-if="currentTutorial" class="edit-form">
     <h4>Tutorial</h4>
     <form>
@@ -57,6 +58,7 @@
     <br />
     <p>Please click on a Tutorial...</p>
   </div>
+  </v-container>
 </template>
 
 <script>
@@ -120,10 +122,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.edit-form {
-  max-width: 300px;
-  margin: auto;
-}
-</style>

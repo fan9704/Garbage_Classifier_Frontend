@@ -11,11 +11,11 @@ import { createStore } from 'vuex';
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import {messaging} from "./util/db";
-// import { registerSW } from 'virtual:pwa-register'
-// registerSW({
-//     onNeedRefresh () {},
-//     onOfflineReady () {}
-// })()
+import { registerSW } from 'virtual:pwa-register'
+registerSW({
+    onNeedRefresh () {},
+    onOfflineReady () {}
+})()
 loadFonts();
 const store = createStore({
     state() {
