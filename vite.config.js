@@ -15,7 +15,7 @@ const path = require('path')
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    // base: path.resolve(__dirname, './dist/'),
+    // base: './dist/',
     plugins: [
         vue(),
         // https://github.com/vuetifyjs/vuetify-loader/tree/next/packages/vite-plugin

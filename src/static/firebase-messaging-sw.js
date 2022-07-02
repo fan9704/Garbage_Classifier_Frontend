@@ -1,7 +1,5 @@
 import firebase from "firebase/app";
 
-importScripts('https://www.gstatic.com/firebasejs/7.2.3/firebase-app.js');
-importScripts('https://www.gstatic.com/firebasejs/7.2.3/firebase-messaging.js');
 firebase.initializeApp({
     apiKey: "AIzaSyAk7JJfK_omrrPwodG4eDBKBs_VgkfOUQ4",
     authDomain: "garbageclassifierapp.firebaseapp.com",

@@ -2,6 +2,8 @@ import firebase from "firebase/app";
 import "firebase/database";
 import "firebase/firestore";
 import "firebase/messaging";
+import axios from "axios";
+
 let config = {
     apiKey: "AIzaSyAk7JJfK_omrrPwodG4eDBKBs_VgkfOUQ4",
     authDomain: "garbageclassifierapp.firebaseapp.com",
@@ -20,3 +22,36 @@ const firestore =firebase.firestore();
 const realtimeBase=firebase.database();
 const messaging=firebase.messaging();
 export { firestore,realtimeBase,messaging };
+
+messaging.getToken({ vapidKey: `${import.meta.env.VITE_VAPID_KEY}` })
+    .then(async (currentToken) => {
+        if (currentToken) {
+            console.log("currentToken", currentToken);
+            const config = {
+                headers: {
+                    Authorization: "key=" + `${import.meta.env.VITE_SERVER_KEY}`,
+                },
+            };
+
+            const url = `${import.meta.env.VITE_FCM_URL}`;
+
+            const data = {
+                notification: {
+                    title: "PUSH NOTIFICATION FROM POST API",
+                    body: "push notification",
+                    icon: "firebase-logo.png",
+                    click_action:
+                        `${import.meta.env.MODE}` === "production"
+                            ? `${import.meta.env.VITE_DOMAIN_URL}`
+                            : "http://localhost:3000/",
+                },
+                to: currentToken,
+            };
+            await axios.post(url, data, config);
+        } else {
+            console.log("No registration token available");
+        }
+    })
+    .catch((err) => {
+        console.log("err", err);
+    });

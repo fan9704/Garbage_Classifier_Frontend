@@ -88,8 +88,9 @@
       <v-main>
         <v-container fluid class="main-container">
           <web-socket></web-socket>
-          <router-view></router-view
-        ></v-container>
+          <router-view></router-view>
+          <SendNotification></SendNotification>
+        </v-container>
         
       </v-main>
          <v-footer app>
@@ -124,8 +125,22 @@
 
 <script>
 import WebSocket from "./components/WebSocket.vue";
-import { reactive, onMounted } from "vue";
+import { inject,reactive, onMounted } from "vue";
 // import ReloadPWA from "./components/ReloadPWA.vue";
+import { provide } from 'vue';
+import { messaging } from './util/db';
+import SendNotification from "./components/SendNotificationComponent.vue";
+//const messagingInject = inject("messaging");
+const notification = reactive({
+  title: '',
+  body: ''
+})
+messaging.onMessage(messaging, (payload) => {
+  console.log("Message received. ", payload);
+  notification.title = payload.notification.title
+  notification.body = payload.notification.body
+});
+
 export default {
     name: "App",
     data: () => ({
@@ -135,7 +150,12 @@ export default {
         logoutform: false,
         Drawer: false
     }),
+  //options api
+    provide: {
+      messaging: messaging
+    },
     setup() {
+         provide('messaging', messaging)
         const states = reactive({
             deferredPrompt: null,
         });
@@ -213,7 +233,8 @@ export default {
       console.log("Firebase cloud messaging object",this.$messaging);
     },
     components: {
-        WebSocket
+        WebSocket,
+        SendNotification
       }
 };
 </script>
