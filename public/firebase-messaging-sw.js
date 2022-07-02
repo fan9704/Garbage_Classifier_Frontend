@@ -30,11 +30,11 @@ messaging.onBackgroundMessage(function(payload) {
     };
     self.registration.showNotification(notificationTitle, notificationOptions);
 });
-//
-// let self
-//
-// self.addEventListener('message', (event) => {
-//     if (event.data && event.data.type === 'SKIP_WAITING') self.skipWaiting()
-// })
-// // self.__WB_MANIFEST is default injection point
+
+let self
+
+self.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'SKIP_WAITING') self.skipWaiting()
+})
+// self.__WB_MANIFEST is default injection point
 // precacheAndRoute(self.__WB_MANIFEST)
