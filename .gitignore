@@ -12,3 +12,4 @@ dist-ssr
 /.idea/vcs.xml
 /dist
 yarn.lock
+.env
