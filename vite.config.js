@@ -15,7 +15,9 @@ const path = require('path')
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    // base: path.resolve(__dirname, './dist/'),
+    build:{
+        chunkSizeWarningLimit:1500,
+    },
     plugins: [
         vue(),
         // https://github.com/vuetifyjs/vuetify-loader/tree/next/packages/vite-plugin
@@ -25,10 +27,10 @@ export default defineConfig({
         VitePWA({
             mode: "development",
             base: "/",
-            srcDir: "src",
-            filename: "sw.js",
+            // srcDir: "src",
+            // filename: "sw.js",
             includeAssets: ["/favicon.png"],
-            strategies: "injectManifest",
+            // strategies: "injectManifest",
             manifest: {
                 name: "Garbage Classifier",
                 short_name: "GCF",
@@ -54,10 +56,10 @@ export default defineConfig({
                         purpose: "any maskable",
                     },
                 ],
-                workbox: {
-                    cleanupOutdatedCaches: true,
-                    sourcemap: true
-                }
+            },
+            workbox: {
+                cleanupOutdatedCaches: true,
+                sourcemap: true
             }
         }),
         // electron({
