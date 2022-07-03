@@ -26,7 +26,6 @@ export { firestore,realtimeBase,messaging };
 messaging.getToken({ vapidKey: `${import.meta.env.VITE_VAPID_KEY}` })
     .then(async (currentToken) => {
         if (currentToken) {
-            console.log("currentToken", currentToken);
             const config = {
                 headers: {
                     Authorization: "key=" + `${import.meta.env.VITE_SERVER_KEY}`,
@@ -47,6 +46,7 @@ messaging.getToken({ vapidKey: `${import.meta.env.VITE_VAPID_KEY}` })
                 },
                 to: currentToken,
             };
+            console.log("currentToken\n", currentToken,"\nConfig:\n",config,"\nURL:\n",url,"\nData:\n",data);
             await axios.post(url, data, config);
         } else {
             console.log("No registration token available");

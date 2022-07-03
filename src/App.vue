@@ -1,5 +1,4 @@
 <template>
-<!--  <ReloadPWA />-->
   <v-app>
     <v-layout style="overflow: hidden">
       <v-app-bar absolute color="warning">
@@ -125,8 +124,7 @@
 
 <script>
 import WebSocket from "./components/WebSocket.vue";
-import { inject,reactive, onMounted } from "vue";
-// import ReloadPWA from "./components/ReloadPWA.vue";
+import { reactive, onMounted } from "vue";
 import { provide } from 'vue';
 import { messaging } from './util/db';
 import SendNotification from "./components/SendNotificationComponent.vue";
@@ -167,7 +165,7 @@ export default {
             window.addEventListener("appinstalled", () => {
                 states.deferredPrompt = null;
             });
-            document.querySelector("#app").addEventListener("click", () => {
+            document.querySelector("#app").addEventListener("click", () => {//TODO: Remove it Or Modify in Router Button
                 if (states.deferredPrompt) {
                     states.deferredPrompt.prompt();
                     states.deferredPrompt = null;
