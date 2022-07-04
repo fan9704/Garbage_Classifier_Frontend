@@ -81,6 +81,12 @@
               title="Refresh"
               v-on:click="refresh"
             ></v-list-item>
+            <v-list-item
+                prepend-icon="mdi-download-box"
+                title="Download App"
+                id="download"
+                @click="console.log('Download App')"
+            ></v-list-item>
           </v-list-item-group>
         </v-list>
       </v-navigation-drawer>
@@ -165,7 +171,7 @@ export default {
             window.addEventListener("appinstalled", () => {
                 states.deferredPrompt = null;
             });
-            document.querySelector("#app").addEventListener("click", () => {//TODO: Remove it Or Modify in Router Button
+            document.querySelector("#download").addEventListener("click", () => {
                 if (states.deferredPrompt) {
                     states.deferredPrompt.prompt();
                     states.deferredPrompt = null;

@@ -92,7 +92,7 @@ export default defineConfig({
     define: { 'process.env': {} },
     resolve: {
         alias: {
-            '@': path.resolve(__dirname, 'src'),
+            '@': path.resolve(__dirname, './src'),
             'vue$': 'vue/dist/vue.esm.js',
             'static': path.resolve(__dirname, '../static'),
             '/images':'src/assets/images',
