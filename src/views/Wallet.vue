@@ -30,7 +30,7 @@
       data-aos-duration="1500"
     >
       <v-col cols="12" md="8">
-        <v-parallax dark src="/src/assets/wallet.png">
+        <v-parallax dark :src="wallet">
           <h1 class="font-weight-thin mb-4 walletValue">${{ walletValue }}</h1>
         </v-parallax></v-col
       >
@@ -38,6 +38,7 @@
   </v-container>
 </template>
 <script>
+import wallet from "../assets/wallet.png"
 export default {
   name: "Wallet",
   data() {
@@ -52,6 +53,7 @@ export default {
       edit_success: false,
       edit_error: false,
       walletValue: 0.0,
+      wallet
     };
   },
   methods: {

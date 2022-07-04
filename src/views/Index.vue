@@ -18,7 +18,7 @@
           <v-hover v-slot="{ hover }" open-delay="300">
             <v-card data-aos="zoom-in">
               <v-img
-                src="/src/assets/index1.png"
+                :src="index1"
                 :class="{ 'on-hover': hover }"
                 height="450"
                 class="grey darken-4"
@@ -53,7 +53,7 @@
           <v-hover v-slot="{ hover }" open-delay="300">
             <v-card data-aos="zoom-in">
               <v-img
-                src="/src/assets/index2.png"
+                :src="index2"
                 :class="{ 'on-hover': hover }"
                 height="450"
                 class="grey darken-4"
@@ -87,14 +87,18 @@
 </template>
 
 <script>
+import index1 from "../assets/index1.png"
+import index2 from "../assets/index2.png"
 export default {
   data() {
     return {
       hover4: "",
       props4: "",
+      index1,
+      index2,
     items: [
  {
-            src: '/src/assets/index2.png',
+            src: index2,
           },
           {
             src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
@@ -111,12 +115,12 @@ export default {
   methods() {},
   computed: {
     getImageUrl(name) {
-      console.log(`/src/assets/${name}`);
-      return new URL(`/src/assets/${name}.png`, import.meta.url).href;
+      console.log(`@/assets/${name}`);
+      return new URL(`/@/assets/${name}.png`, import.meta.url).href;
     },
     getAssetsHomeFile(url) {
-      const path = `/src/assets/${url}`;
-      const modules = import.meta.globEager("/src/assets/*");
+      const path = `@/assets/${url}`;
+      const modules = import.meta.globEager("@/assets/*");
       return modules[path].default;
     },
   },
