@@ -1,14 +1,39 @@
 <template>
 
 <v-container class="chatroom" >
-    <v-row  v-show="chatroomDrawer">
-        <v-col cols="12" class="d-flex justify-end mb-6">
-            <h5>Chat To Receptionist</h5>
-            <v-btn @click="sendDataToServer">Send Data To Backend</v-btn>
+    <v-row  class="receptionRoom" v-show="chatroomDrawer">
+        <v-col >
+            <h3 @click="chatroomDrawer = !chatroomDrawer">Chat To Receptionist</h3>
+          <span
+              :key="index"
+              v-for="(msg, index) in messages"
+
+          >
+            <v-chip
+                v-if="msg.username"
+                    class="ma-2"
+                    size="large">
+              {{msg.content}}
+            </v-chip>
+
+            <v-chip
+                v-else
+                    size="large">
+>
+              {{msg.content}}
+            </v-chip>
+          </span>
+          <div>
+            <v-text-field
+                label="Message!"
+            ></v-text-field>
+<!--            <v-btn @click="sendDataToServer">Send Message To Backend</v-btn>-->
+          </div>
+
         </v-col>
     </v-row>
-            <v-row>
-        <v-col cols="12"  class="d-flex justify-end mb-6">
+    <v-row v-show="!chatroomDrawer">
+        <v-col  >
             <v-btn @click="chatroomDrawer = !chatroomDrawer">Chat To Receptionist</v-btn>
         </v-col>
     </v-row>
@@ -20,27 +45,46 @@ export default{
     name:"WebSocket",
     data(){
         return{
+            messages:[
+              {
+                "username":"0",
+                "content":"[INFO] Welcome to Garbage Classifier Customer service system"
+               },
+            ],
             wsIsRun:false,
             webSocket:null,
             ws:"",
             wsTimer:null,
             chatroomDrawer:false,
+            UserKeyIn:"",
         }
     },
     async mounted() {
         this.wsIsRun=true;
         this.wsInit();
+        window.addEventListener("keypress", function(e) {
+          if(e.keyCode === 13 &&this.chatroomDrawer==true){
+            console.log("Enter")
+            this.sendDataToServer();
+          }
+        });
     },
     methods:{
         sendDataToServer(){
             if(this.webSocket.readyState===1){
-                this.webSocket.send("From Frontend Data");
+                if(this.UserKeyIn!=""){
+                  this.webSocket.send(this.UserKeyIn);
+                }else{
+                  this.webSocket.send("From Frontend Data");
+                }
+
             }else{
                 throw Error("Service Unconnected");
             }
         },
         wsInit(){
-            const wsuri="ws://140.125.207.230:8080/websocket/badao";
+            let wsuri="140.125.207.230:8080/websocket/badao";
+            wsuri=window.location.protocol=='https:'?`wss://${wsuri}`:`ws://${wsuri}`;
             this.ws=wsuri;
             if(!this.wsIsRun)return
             this.wsDestroy()
@@ -60,27 +104,27 @@ export default{
                 }
             },3000)
         },
-        wsOpenHanler(event){
+        wsOpenHandler(event){
             console.log("ws connection create success");
         },
-        wsMessageHanler(event){
-            console.log("wsMessageHanler");
+        wsMessageHandler(event){
+            console.log("wsMessageHandler");
             console.log(event.data);
         },
-        wsErrorHanler(event){
+        wsErrorHandler(event){
             console.log(event,"Communication has error");
             this.wsInit();
         },
-        wsCloseHanler(event){
+        wsCloseHandler(event){
             console.log(event,"ws close");
             this.wsInit();
         },
         wsDestroy(){
             if(this.webSocket!==null){
-                this.webSocket.removeEventListener('open',this.wsOpenHanler)
-                this.webSocket.removeEventListener('message',this.wsMessageHanler)
-                this.webSocket.removeEventListener('error',this.wsErrorHanler)
-                this.webSocket.removeEventListener('close',this.wsCloseHanler)
+                this.webSocket.removeEventListener('open',this.wsOpenHandler)
+                this.webSocket.removeEventListener('message',this.wsMessageHandler)
+                this.webSocket.removeEventListener('error',this.wsErrorHandler)
+                this.webSocket.removeEventListener('close',this.wsCloseHandler)
                 this.webSocket.close();
                 this.webSocket=null;
                 clearInterval(this.wsTimer);
@@ -91,13 +135,18 @@ export default{
 </script>
 
 <style>
-.v-container .chatroom{
+.chatroom{
     position: fixed;
     bottom: 0;
     right: 0;
     z-index: 3;
 }
-.v-container .chatroom.v-row{
+.receptionRoom{
+  background: #FFF;
+  width: 50%;
+  border-radius: 10px;
+}
+.chatroom.v-row{
     position: relative;
     bottom: auto;
     right: auto;

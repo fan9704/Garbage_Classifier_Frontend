@@ -1,8 +1,8 @@
 <template>
-  <v-container class="Notify">
+  <v-container class="Notify justify-start mb-6">
     <v-row>
-      <v-col cols="12">
-        <v-btn  @click="onSend" class="d-flex justify-end mb-6"> Send Notification From Background</v-btn>
+      <v-col >
+        <v-btn  @click="onSend" >Send Notification</v-btn>
       </v-col>
     </v-row>
   </v-container>
@@ -43,15 +43,14 @@ function onSend(){
 }
 </script>
 <style>
-.v-container .Notify{
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  z-index: 3;
-}
-.v-container .Notify.v-row{
-  position: relative;
-  bottom: auto;
-  right: auto;
-}
+/*.v-container .Notify{*/
+/*  position: fixed;*/
+/*  bottom: 0;*/
+/*  right: 0;*/
+/*}*/
+/*.v-container .Notify.v-row{*/
+/*  position: relative;*/
+/*  bottom: auto;*/
+/*  right: auto;*/
+/*}*/
 </style>

@@ -87,14 +87,16 @@
                 id="download"
                 @click="console.log('Download App')"
             ></v-list-item>
+            <SendNotification></SendNotification>
+
           </v-list-item-group>
         </v-list>
       </v-navigation-drawer>
       <v-main>
         <v-container fluid class="main-container">
-          <web-socket></web-socket>
           <router-view></router-view>
-          <SendNotification></SendNotification>
+
+          <web-socket></web-socket>
         </v-container>
         
       </v-main>

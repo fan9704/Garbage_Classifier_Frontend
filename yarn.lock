@@ -1427,10 +1427,10 @@
   resolved "https://registry.yarnpkg.com/@types/trusted-types/-/trusted-types-2.0.2.tgz#fc25ad9943bcac11cceb8168db4f275e0e72e756"
   integrity sha512-F5DIZ36YVLE+PN+Zwws4kJogq47hNgX3Nx6WyDJ3kcplxyke3XIzB8uK5n/Lpm1HBsbGzd6nmGehL8cPekP+Tg==
 
-"@vitejs/plugin-vue@^2.0.0":
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/@vitejs/plugin-vue/-/plugin-vue-2.3.1.tgz#5f286b8d3515381c6d5c8fa8eee5e6335f727e14"
-  integrity sha512-YNzBt8+jt6bSwpt7LP890U1UcTOIZZxfpE5WOJ638PNxSEKOqAi0+FSKS0nVeukfdZ0Ai/H7AFd6k3hayfGZqQ==
+"@vitejs/plugin-vue@^2.3.3":
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/@vitejs/plugin-vue/-/plugin-vue-2.3.3.tgz#fbf80cc039b82ac21a1acb0f0478de8f61fbf600"
+  integrity sha512-SmQLDyhz+6lGJhPELsBdzXGc+AcaT8stgkbiTFGpXPe8Tl1tJaBw1A6pxDqDuRsVkD8uscrkx3hA7QDOoKYtyw==
 
 "@vue/compiler-core@3.1.4":
   version "3.1.4"
@@ -3212,7 +3212,7 @@ rollup-plugin-terser@^7.0.0:
     serialize-javascript "^4.0.0"
     terser "^5.0.0"
 
-rollup@^2.43.1, rollup@^2.59.0, rollup@^2.70.2:
+rollup@^2.43.1, rollup@^2.59.0, rollup@^2.75.5:
   version "2.75.7"
   resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.75.7.tgz#221ff11887ae271e37dcc649ba32ce1590aaa0b9"
   integrity sha512-VSE1iy0eaAYNCxEXaleThdFXqZJ42qDBatAwrfnPlENEZ8erQ+0LYX4JXOLPceWfZpV1VtZwZ3dFCuOZiSyFtQ==
@@ -3558,22 +3558,22 @@ util-deprecate@^1.0.2:
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=
 
-vite-plugin-pwa@^0.12.0:
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/vite-plugin-pwa/-/vite-plugin-pwa-0.12.0.tgz#c0be71cf42452055bafca777b6c110f46d0feac7"
-  integrity sha512-KYD+cnS5ExLF3T28NkfzBLZ53ehHlp+qMhHGFNh0zlVGpFHrJkL2v9wd4AMi7ZkBTffgeNatIFiv8rhCsMSxBQ==
+vite-plugin-pwa@^0.12.2:
+  version "0.12.2"
+  resolved "https://registry.yarnpkg.com/vite-plugin-pwa/-/vite-plugin-pwa-0.12.2.tgz#d0ec1cd3088260bdc5bf2b10ba753def0b8f3280"
+  integrity sha512-XK2oi1YZkoc1J8fyerNYxyh/yfb+INdrdOW/mOOD5DBLq7jVPxHQuncIhqiREbGOMlY/xMe9CSE7QZ9xIAEf7A==
   dependencies:
     debug "^4.3.4"
     fast-glob "^3.2.11"
     pretty-bytes "^6.0.0"
-    rollup "^2.70.2"
+    rollup "^2.75.5"
     workbox-build "^6.5.3"
     workbox-window "^6.5.3"
 
-vite@^2.7.0-beta.3:
-  version "2.9.12"
-  resolved "https://registry.yarnpkg.com/vite/-/vite-2.9.12.tgz#b1d636b0a8ac636afe9d83e3792d4895509a941b"
-  integrity sha512-suxC36dQo9Rq1qMB2qiRorNJtJAdxguu5TMvBHOc/F370KvqAe9t48vYp+/TbPKRNrMh/J55tOUmkuIqstZaew==
+vite@^2.9.13:
+  version "2.9.13"
+  resolved "https://registry.yarnpkg.com/vite/-/vite-2.9.13.tgz#859cb5d4c316c0d8c6ec9866045c0f7858ca6abc"
+  integrity sha512-AsOBAaT0AD7Mhe8DuK+/kE4aWYFMx/i0ZNi98hJclxb4e0OhQcZYUrvLjIaQ8e59Ui7txcvKMiJC1yftqpQoDw==
   dependencies:
     esbuild "^0.14.27"
     postcss "^8.4.13"
@@ -3629,7 +3629,7 @@ vuefire@^2.2.5:
   dependencies:
     "@posva/vuefire-core" "^2.3.4"
 
-vuetify-loader@^2.0.0-alpha.0:
+vuetify-loader@^2.0.0-alpha.9:
   version "2.0.0-alpha.9"
   resolved "https://registry.yarnpkg.com/vuetify-loader/-/vuetify-loader-2.0.0-alpha.9.tgz#0a108b1ac11fc8af63046b16321505b444c04746"
   integrity sha512-M4u2XX9coe1U51jLKek54eJTo7wnroNfglh6sQplRTslhQRKQM3k84oh87D0VHqTzoTzlKPHP0sIWdpklwaEEQ==
@@ -3643,10 +3643,10 @@ vuetify-loader@^2.0.0-alpha.0:
     querystring "^0.2.1"
     upath "^2.0.1"
 
-vuetify@^3.0.0-beta.2:
-  version "3.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-3.0.0-beta.2.tgz#0dc25b653da1339654d7f015ed2074072210cc6b"
-  integrity sha512-mvrg8C+A8Gd3GRmtO1uidxJvd0KDTfN8vT4ARGRpXVteDHMYwbaVmGz/I4KY6gPASPkR1fVpvtz590h++2kuIA==
+vuetify@^3.0.0-beta.5:
+  version "3.0.0-beta.5"
+  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-3.0.0-beta.5.tgz#8ec5d7de5b52a10e098390188894e4f081cba363"
+  integrity sha512-mU+pO5ZAZOR2Z7eVBoPwZw6nePxT5Sdqpsa4++Q99TwVxXQ7jl76Cy97v72MkDYWfxjDjj8XvW6IqNPGrJpU8w==
 
 vuex@^4.0.2:
   version "4.0.2"
