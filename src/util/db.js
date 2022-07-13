@@ -2,6 +2,7 @@ import firebase from "firebase/app";
 import "firebase/database";
 import "firebase/firestore";
 import "firebase/messaging";
+import "firebase/auth";
 import axios from "axios";
 
 let config = {
@@ -21,7 +22,10 @@ firebase.initializeApp(config);
 const firestore =firebase.firestore();
 const realtimeBase=firebase.database();
 const messaging=firebase.messaging();
-export { firestore,realtimeBase,messaging };
+const GitHubAuth = new firebase.auth.GithubAuthProvider();
+const firebaseAuth=firebase.auth()
+
+export { GitHubAuth,firebaseAuth,firestore,realtimeBase,messaging };
 
 messaging.getToken({ vapidKey: `${import.meta.env.VITE_VAPID_KEY}` })
     .then(async (currentToken) => {
