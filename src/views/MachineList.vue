@@ -60,17 +60,9 @@
       <v-row>
         <v-col cols="3" xs="3" sm="3" md="1" lg="1">Picture</v-col>
         <v-col cols="9" xs="9" sm="9" md="11" lg="11">
-       <v-img   :src="machinePicture">
-         <v-file-input
-    label="File input"
-    filled
-    prepend-icon="mdi-camera"
-    v-model="uploadPicture"
-    @change="convertPicture"
-  ></v-file-input>
-       </v-img>
-           <input multiple type="file" @change="fileChange">
-    <button @click="upload">upload</button>
+            <input type="file" ref="file" title="Select A Picture" @change="selectFile" />
+    <v-btn @click="uploadFiles">upload</v-btn>
+<!--          <img :src="dataUrl" alt="Preview IMG" />-->
         </v-col>
       </v-row>
       <v-row >
@@ -177,6 +169,7 @@
   </div>
 </template>
 <script>
+import uploadFileService from "../services/UploadFileService";
 export default {
   name: "Machinelist",
   data() {
@@ -197,8 +190,12 @@ export default {
       UserID:0,
       machinePicture:"",
       MachineID:"",
-      uploadPicture:"",
-      formData: new FormData()
+
+      selectedFiles: "",
+      progressInfos: [],
+      message: "",
+      fileInfos: [],
+      previewImage:undefined,
     };
   },
   methods: {
@@ -243,13 +240,13 @@ export default {
         .get(url)
         .then((res) => {
           this.MachineInfoForm = !this.MachineInfoForm;
-          console.log(res.data);
           this.MachineID=res.data.id;
           this.MachineLocation = res.data.location;
           this.UserLock = res.data.user_lock;
           this.MachineLock = res.data.machine_lock;
           this.CurrentUser = res.data.current_user.userName;
-          this.machinePicture = res.data.machinePicture.binaryStream;
+          this.machinePicture = res.data.machinePicture;
+          // this.previewImage='data:image/jpeg;base64,' +res.data.machinePicture
         })
         .catch((error) => console.log(error));
     },
@@ -329,26 +326,29 @@ export default {
         })
         .catch((error) => console.log(error));
       },
-      convertPicture(){
-        const file =this.uploadPicture.files[0];
-        URL.createObjectURL(file)
-      },
-      fileChange(e) {
-          for (var i = 0; i < e.target.files.length; i++) {
-            this.formData.append('file', e.target.files[i]) //用迴圈抓出多少筆再append回來
-          }
-      },
-      upload() {
-        let config={
-            "machinePicture": {
-              "binaryStream": this.formData
-            }
-        }
-          this.axios.patch(`/api/machine/picture/${this.MachineID}`,config 
-          )
-          .then((res)=>{console.log(res.data)})
-          .catch((err)=>{console.log(err)})
-      }
+    selectFile() {
+      this.selectedFiles = this.$refs.file.files;
+    },
+    upload(file) {
+        this.progressInfos = { percentage: 0, fileName: file.name };
+        uploadFileService.upload(this.MachineID,file)
+            .then((response) => {
+              alert(response.data.message);
+            })
+            .catch(() => {
+              this.progressInfos.percentage = 0;
+              alert("Could not upload the image:" + file.name);
+            });
+    },
+    uploadFiles() {
+      this.upload(this.selectedFiles.item(0));
+    }
+  },
+  watch : {
+    dataUrl(){
+      console.log('data:image/jpeg;base64,' + this.previewImage)
+      return 'data:image/jpeg;base64,' + this.previewImage;
+    }
   },
   beforeMount() {
     this.showAllMachine();
