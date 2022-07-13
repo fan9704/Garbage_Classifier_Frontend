@@ -132,6 +132,9 @@
         >
           Login
         </v-btn>
+        <hr style="margin: 20px 0px">
+        <h3 style="text-align: center;margin: 10px 0px;">Through Other Organization Authenticate</h3>
+        <v-btn  min-width="100%" @click="GitHubLogin" prepend-icon="mdi-github">Login Via GitHub</v-btn>
       </v-container>
     </transition>
 
@@ -222,6 +225,8 @@
 </template>
 
 <script>
+import {firebaseAuth} from "../util/db";
+import {GitHubAuth} from "../util/db";
 export default {
   name: "Login",
   data: () => ({
@@ -347,6 +352,45 @@ export default {
           }
         })
         .catch((error) => console.log(error));
+    },
+    //GitHub Auth
+    GitHubLogin(){
+      firebaseAuth
+          .signInWithPopup(GitHubAuth)
+          .then((result) => {
+            let credential = result.credential;
+            let token = credential.accessToken;//Can through this Token Use other GitHub API
+            let user = result.user;
+            console.log("🚀 ~ file: main.js ~ line 70 ~ .then ~ user", user)
+            console.log("Display Name"+user.displayName+
+                "\nEmail: "+ user.email+
+                "\nEmailVerified:"+ user.emailVerified+
+                "\nphotoURL:"+ user.photoURL+
+                "\nUID:"+ user.uid+
+                "\nToken:"+token+
+                "\nCredential:"+credential);
+            this.$store.commit("login");
+            this.$store.state.user = user.displayName;
+            this.$swal.fire(  'Login Success!!',`Welcome ${user.displayName} ~ `,'success');//TODO: Send OAuth User information to Backend
+            // window.location.href="/";
+            this.$router.push({ name: "index" });
+          }).catch((error) => {
+        let errorCode = error.code;
+        let errorMessage = error.message;
+        let email = error.email;
+        let credential = error.credential;
+      });
+    },
+    GitHubLogout() {
+      const signOutBtn = document.getElementById('signOut');
+      signOutBtn.addEventListener('click', () => {
+        firebaseAuth.signOut().then(() => {
+          window.alert('登出成功，將重新整理一次頁面！');
+          window.location.reload();
+        }).catch((error) => {
+          document.getElementById('userError').innerHTML = JSON.stringify(error);
+        });
+      })
     },
   },
 };

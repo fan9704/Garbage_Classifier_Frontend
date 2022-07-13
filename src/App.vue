@@ -53,25 +53,25 @@
             ></v-list-item>
             
             <v-list-item
-              v-if="!Drawer"
+                v-show="!Drawer"
               prepend-icon="mdi-account"
               title="Login/Register"
               to="/account/login"
             ></v-list-item>
             <v-list-item
-              v-if="Drawer"
+                v-show="Drawer"
               prepend-icon="mdi-logout"
               title="Logout"
               v-on:click="logout"
             ></v-list-item>
                      <v-list-item
-              v-if="Drawer"
+                         v-show="Drawer"
               prepend-icon="mdi-account"
               title="Account setting"
               to="/account/setting"
             ></v-list-item>
             <v-list-item
-              v-if="Drawer"
+                v-show="Drawer"
               prepend-icon="mdi-cash-check"
               title="Manage Wallet"
               to="/account/wallet"
@@ -136,7 +136,6 @@ import { reactive, onMounted } from "vue";
 import { provide } from 'vue';
 import { messaging } from './util/db';
 import SendNotification from "./components/SendNotificationComponent.vue";
-//const messagingInject = inject("messaging");
 const notification = reactive({
   title: '',
   body: ''
