@@ -1,13 +1,15 @@
 import {createRouter, createWebHistory} from "vue-router";
-import Index from "../views/Index.vue"
-import Login from "../views/Login.vue"
-import GraphView from "../views/Graph.vue"
-import MachineList from "../views/MachineList.vue"
-import Settings from "../views/Settings.vue"
-import Wallet from "../views/Wallet.vue"
-import MachineStorageList from "../views/MachineStorageList.vue"
-import Firestore from "../components/Firestore.vue"
-import RealtimeBase from "../components/RealtimeBase.vue"
+import Index from "../views/Index.vue";
+import Login from "../views/Login.vue";
+import GraphView from "../views/Graph.vue";
+import MachineList from "../views/MachineList.vue";
+import Settings from "../views/Settings.vue";
+import Wallet from "../views/Wallet.vue";
+import MachineStorageList from "../views/MachineStorageList.vue";
+import Firestore from "../components/Firestore.vue";
+import RealtimeBase from "../components/RealtimeBase.vue";
+import FireStorage from "../views/FireStorage.vue";
+
 const routes = [{
         path: "/",
         name: "index",
@@ -52,6 +54,11 @@ const routes = [{
         name: "RealtimeBase",
         component: RealtimeBase
     },
+    {
+        path:"/fireStorage",
+        name:"FireStorage",
+        component: FireStorage
+    }
 ];
 
 const router = createRouter({

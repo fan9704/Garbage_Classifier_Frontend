@@ -51,7 +51,11 @@
               title="RealtimeBase"
               to="/realtime"
             ></v-list-item>
-            
+            <v-list-item
+                prepend-icon="mdi-firebase"
+                title="Fire storage"
+                to="/fireStorage"
+            ></v-list-item>
             <v-list-item
                 v-show="!Drawer"
               prepend-icon="mdi-account"
