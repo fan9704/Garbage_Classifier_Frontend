@@ -2,7 +2,7 @@
 
 ### Yuntech Information management department System Analysis and Design G6 Teamwork
 
-![](https://img.shields.io/github/languages/top/fan9704/Garbage_Classifier_Frontend?logo=openjdk&logoColor=%23FFFFFF&style=for-the-badge)
+![](https://img.shields.io/github/languages/top/fan9704/Garbage_Classifier_Frontend?logo=vuek&logoColor=%23FFFFFF&style=for-the-badge)
 ![](https://img.shields.io/github/languages/count/fan9704/Garbage_Classifier_Frontend?color=%23005A2B&style=for-the-badge)
 
 Powered By Vue3 and Vite
