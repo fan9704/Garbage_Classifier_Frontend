@@ -34,6 +34,10 @@ Powered By Vue3 and Vite
 
 ----
 
+![](./doc/FrontendStructure.png)
+
+----
+
 ### Install all dependencies
 
 ```shell
